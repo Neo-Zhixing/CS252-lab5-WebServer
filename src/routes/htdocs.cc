@@ -13,6 +13,12 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
 
   std::ifstream input("http-root-dir/htdocs" + request.request_uri, std::ios_base::in | std::ios_base::binary );
 
+  if (!input) {
+    res.status_code = 404;
+    sock->write(response.to_string());
+    return;
+  }
+
   input.seekg(0, std::ios::end);
   size_t size = input.tellg();
   char * buf = new char[size];
