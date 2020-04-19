@@ -1,5 +1,6 @@
 #include "http_messages.hh"
 #include "socket.hh"
+#include "misc.hh"
 #include <fstream>
 
 // You may find implementing this function and using it in server.cc helpful

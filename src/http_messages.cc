@@ -1,7 +1,6 @@
 #include "http_messages.hh"
 #include <stdexcept>
 #include "socket.hh"
-#include "misc.hh"
 
 // You may find this map helpful. You can implement HttpResponse::to_string() such that
 // if no reason_phrase is set, then you try looking up a default_status_reason in this
