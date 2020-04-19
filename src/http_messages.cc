@@ -39,11 +39,17 @@ std::string HttpResponse::to_string() const {
     } else {
         ss << this->reason_phrase;
     }
+
+    for (std::pair<std::string, std::string> header : headers) {
+		std::cout << header.first << ": " << header.second << "\r\n";
+	}
+
+    if (header.find("Content-Length") == header.end()) {
+        std::cout << "Content-Length: " << body.length << "\r\n";
+    }
     ss << "\r\n";
-    ss << "Connection: close\r\n";
-    ss << "Content-Length: 11\r\n";
-    ss << "\r\n";
-    ss << "Fuck CS252!\r\n";
+
+    ss << body << "\r\n";
     return ss.str();
 }
 
