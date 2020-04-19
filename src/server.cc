@@ -73,6 +73,6 @@ HttpRequest Server::get_request(const Socket_t& sock) const {
   while ((pos = line.find(' ')) != std::string::npos) {
       auto token = line.substr(0, pos);
       std::cout << token << std::endl;
-      line.erase(0, pos + delimiter.length());
+      line.erase(0, pos + 1);
   }
 }
