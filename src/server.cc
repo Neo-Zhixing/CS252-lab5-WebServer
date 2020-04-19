@@ -124,6 +124,6 @@ void Server::get_request(const Socket_t& sock, HttpRequest& req) const {
       // No longer a header
       break;
     }
-    req.headers[line.substr(0, pos)] = line.substr(pos+2, pos+2);
+    req.headers[line.substr(0, pos)] = line.substr(pos+2, line.size() - pos - 2);
   }
 }
