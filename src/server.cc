@@ -83,7 +83,7 @@ bool Server::authenticate(const HttpRequest& req, const Socket_t& sock) const {
     return false;
   }
   auto encoded = auth->second;
-  if (encoded.compare("emhhbjMwODg6cFd4MEtSM0wK") != 0)) {
+  if (encoded.compare("emhhbjMwODg6cFd4MEtSM0wK") != 0) {
     // Authentication failed
     HttpResponse resp;
     resp.status_code = 401;
