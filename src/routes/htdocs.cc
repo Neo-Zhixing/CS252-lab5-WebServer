@@ -11,7 +11,8 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
   // Get the request URI, verify the file exists and serve it
   std::cout << "http-root-dir/htdocs" + request.request_uri << std::endl;
 
-  std::ifstream input("http-root-dir/htdocs" + request.request_uri, std::ios_base::in | std::ios_base::binary );
+  std::ifstream input;
+  input.open("http-root-dir/htdocs" + request.request_uri, std::ios_base::in | std::ios_base::binary );
 
   if (!input) {
     response.status_code = 404;
