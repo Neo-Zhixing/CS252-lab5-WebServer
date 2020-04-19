@@ -21,14 +21,22 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
 
   input.seekg(0, std::ios::end);
   size_t size = input.tellg();
-  char * buf = new char[size];
-  input.seekg(0, std::ios::beg);
-  
-  input >> buf;
-  response.status_code = 200;
-  response.headers["Content-Length"] = std::to_string(size);
+  if (size > 0) {
+    char * buf = new char[size];
+    input.seekg(0, std::ios::beg);
+    
+    input >> buf;
+    response.status_code = 200;
+    response.headers["Content-Length"] = std::to_string(size);
 
-  sock->write(response.to_string());
-  sock->write(buf, size);
+    sock->write(response.to_string());
+    sock->write(buf, size);
+  } else {
+    response.headers["Content-Length"] = "0";
+
+    sock->write(response.to_string());
+  }
+
+
   delete[] buf;
 }
