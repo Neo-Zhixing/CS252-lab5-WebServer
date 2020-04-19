@@ -49,17 +49,6 @@ std::vector<Route_t> route_map = {
 */
 
 
-  HttpResponse resp;
-  // TODO: Make a response for the HTTP request
-  resp.http_version = "HTTP/1.1";
-  resp.status_code = 200;
-  resp.reason_phrase = "OK";
-  resp.headers["Connection"] = "close";
-  resp.message_body = "Fuck CS252!";
-  std::cout << resp.to_string() << std::endl;
-  sock->write(resp.to_string());
-}
-
 void Server::handle(const Socket_t& sock) const {
   HttpRequest request;
   get_request(sock, request);
@@ -74,7 +63,6 @@ void Server::handle(const Socket_t& sock) const {
   }
 
   HttpResponse res = handle_htdocs(request);
-  sock->write(res.to_string());
 }
 
 bool Server::authenticate(const HttpRequest& req, const Socket_t& sock) const {
