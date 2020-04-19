@@ -18,8 +18,9 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
   if (uri.back() == '/') {
     uri = uri + "index.html";
   }
+  uri = "http-root-dir/htdocs" + uri;
 
-  std::ifstream input("http-root-dir/htdocs" + uri, std::ios_base::in | std::ios_base::binary );
+  std::ifstream input(uri, std::ios_base::in | std::ios_base::binary );
 
   if (!input) {
     response.status_code = 404;
@@ -41,7 +42,7 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
     input.read(buf, size);
     response.status_code = 200;
     response.headers["Content-Length"] = std::to_string(size);
-
+    response.headers["Content-Type"] = get_content_type(uri);
     sock->write(response.to_string());
     sock->write(buf, size);
     delete[] buf;
