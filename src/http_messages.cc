@@ -58,7 +58,9 @@ std::string HttpResponse::to_string() const {
     }
     ss << "\r\n";
 
-    ss << message_body << "\r\n";
+    if (!message_body.empty()) {
+      ss << message_body << "\r\n";
+    }
     return ss.str();
 }
 
