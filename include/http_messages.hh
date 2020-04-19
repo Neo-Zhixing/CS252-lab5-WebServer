@@ -28,7 +28,7 @@ class HttpResponse {
     std::map<std::string, std::string> headers;
     std::string message_body;
 
-    std::string to_string() const;
+    std::string to_string();
 
     void print() const {
         std::cout << to_string() << std::endl;
