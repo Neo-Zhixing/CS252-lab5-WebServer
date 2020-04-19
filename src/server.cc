@@ -73,7 +73,7 @@ void Server::handle(const Socket_t& sock) const {
 }
 
 bool Server::authenticate(const HttpRequest& req, const Socket_t& sock) const {
-  auto auth = req.headers.get("Authorization");
+  auto auth = req.headers.find("Authorization");
   if (auth == req.headers.end()) {
     // No Authorization header present
     HttpResponse resp;
