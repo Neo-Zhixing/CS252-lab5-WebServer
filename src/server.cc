@@ -79,7 +79,9 @@ void Server::get_request(const Socket_t& sock, HttpRequest& req) const {
         case 0: req.method = token;break;
         case 1: req.request_uri = token;
                 std::size_t question_mark_location = token.find('?');
-                if (question_mark_location != std::string::npos) req.query = token.substr(question_mark_location+ 1);
+                if (question_mark_location != std::string::npos){
+                  req.query = token.substr(question_mark_location+ 1);
+                }
                 break;
         case 2: req.http_version = token;break;
         default: throw std::invalid_argument("Extra token on the first line"); 
