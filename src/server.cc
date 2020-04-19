@@ -40,13 +40,13 @@ void Server::run_thread_pool(const int num_threads) const {
 // example route map. you could loop through these routes and find the first route which
 // matches the prefix and call the corresponding handler. You are free to implement
 // the different routes however you please
-/*
+
 std::vector<Route_t> route_map = {
   std::make_pair("/cgi-bin", handle_cgi_bin),
   std::make_pair("/", handle_htdocs),
   std::make_pair("", handle_default)
 };
-*/
+
 
 
 void Server::handle(const Socket_t& sock) const {
@@ -62,7 +62,12 @@ void Server::handle(const Socket_t& sock) const {
     return;
   }
 
-  HttpResponse res = handle_htdocs(request);
+  for (auto pair : route_map) {
+    if (request.request_uri.starts_with(pair->first)) {
+      HttpResponse res = handle_htdocs(request);
+      sock.write(res.to_string());
+    }
+  }
 }
 
 bool Server::authenticate(const HttpRequest& req, const Socket_t& sock) const {
