@@ -49,9 +49,7 @@ std::vector<Route_t> route_map = {
 */
 
 void Server::handle(const Socket_t& sock) const {
-  HttpRequest request;
-
-  get_request(sock, request);
+  HttpRequest request = get_request(sock, request);
   // TODO: implement parsing HTTP requests
   // recommendation:
   // void parse_request(const Socket_t& sock, HttpRequest* const request);
@@ -69,7 +67,7 @@ void Server::handle(const Socket_t& sock) const {
   sock->write(resp.to_string());
 }
 
-void Server::get_request(const Socket_t& sock, HttpRequest& request) {
+HttpRequest Server::get_request(const Socket_t& sock) {
     auto line = sock.readline();
     while ((auto pos = line.find(' ')) != std::string::npos) {
         auto token = line.substr(0, pos);
