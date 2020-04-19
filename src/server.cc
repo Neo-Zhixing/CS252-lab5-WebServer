@@ -75,6 +75,7 @@ void Server::get_request(const Socket_t& sock, HttpRequest& req) const {
   int state = 0;
   while ((pos = line.find(' ')) != std::string::npos) {
       auto token = line.substr(0, pos);
+      std::cout << "Token: " << token << std::endl;
       switch (state) {
         case 0: req.method = token;break;
         case 1: {
