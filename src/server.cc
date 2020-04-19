@@ -75,7 +75,7 @@ void Server::handle(const Socket_t& sock) const {
 bool Server::authenticate(const HttpRequest& req, const Socket_t& sock) const {
   auto auth = req.headers.find("Authorization");
   std::cout << auth->second << std::endl;
-  if (auth == req.headers.end() || auth->second.compare("emhhbjMwODg6cFd4MEtSM0wK") != 0) {
+  if (auth == req.headers.end() || auth->second.compare("emhhbjMwODg6cFd4MEtSM0w=") != 0) {
     // No Authorization header present
     HttpResponse resp;
     resp.status_code = 401;
@@ -93,7 +93,6 @@ void Server::get_request(const Socket_t& sock, HttpRequest& req) const {
   int state = 0;
   while ((pos = line.find(' ')) != std::string::npos) {
       auto token = line.substr(0, pos);
-      std::cout << "Token: " << token << std::endl;
       switch (state) {
         case 0: req.method = token;break;
         case 1: {
