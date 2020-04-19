@@ -49,7 +49,8 @@ std::vector<Route_t> route_map = {
 */
 
 void Server::handle(const Socket_t& sock) const {
-  HttpRequest request = get_request(sock);
+  HttpRequest request;
+  get_request(sock, request);
   // TODO: implement parsing HTTP requests
   // recommendation:
   // void parse_request(const Socket_t& sock, HttpRequest* const request);
