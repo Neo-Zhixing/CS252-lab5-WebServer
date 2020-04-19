@@ -25,6 +25,7 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
   input.seekg(0, std::ios::beg);
   
   input >> buf;
+  response.status_code = 200;
 
   sock->write(response.to_string());
   sock->write(buf, size);
