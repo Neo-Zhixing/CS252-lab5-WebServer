@@ -22,6 +22,7 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
   input.seekg(0, std::ios::end);
   size_t size = input.tellg();
   if (size > 0) {
+    std::cout << "file size:  a " << size << std::endl;
     char * buf = new char[size];
     input.seekg(0, std::ios::beg);
     
