@@ -1,5 +1,7 @@
 #include "http_messages.hh"
 #include "socket.hh"
+#include <ifstream>
+
 // You may find implementing this function and using it in server.cc helpful
 
 void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
