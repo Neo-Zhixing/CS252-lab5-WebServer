@@ -2,10 +2,10 @@
 
 // If you use the recommended route handling scheme, you will probably want a default handler
 
-HttpResponse handle_default(const HttpRequest& request) {
+void handle_default(const HttpRequest& request, const Socket_t& sock) {
   HttpResponse response;
   response.http_version = request.http_version;
   response.status_code = 404;
-  return response;
+  sock->send(response.to_string());
 }
 
