@@ -32,7 +32,7 @@ std::string HttpResponse::to_string() const {
     
     if (this->reason_phrase.empty()) {
         int code = this->status_code;
-        ss << default_status_reasons[code];
+        //ss << default_status_reasons[code];
     } else {
         ss << this->reason_phrase;
     }
