@@ -77,7 +77,10 @@ void Server::get_request(const Socket_t& sock, HttpRequest& req) const {
       auto token = line.substr(0, pos);
       switch (state) {
         case 0: req.method = token;break;
-        case 1: req.request_uri = token;break;
+        case 1:
+          req.request_uri = token;
+          req.query = token.substr(token.find('?') + 1);
+          break;
         case 2: req.http_version = token;break;
         default: throw std::invalid_argument("Extra token on the first line"); 
       }
