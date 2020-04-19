@@ -95,4 +95,16 @@ void Server::get_request(const Socket_t& sock, HttpRequest& req) const {
     throw std::invalid_argument("Unexpected end of line on the first line");
   }
   req.http_version = line.substr(0, line.size()-2);
+
+
+  // Start to parse headers
+  while (true) {
+    line = sock->readline();
+    pos = line.find(':');
+    if (pos == std::string::npos) {
+      // No longer a header
+      break;
+    }
+    req.headers[line.substr(0, pos)] = line.substr(pos);
+  }
 }
