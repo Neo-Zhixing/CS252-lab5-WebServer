@@ -14,7 +14,7 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
   std::ifstream input("http-root-dir/htdocs" + request.request_uri, std::ios_base::in | std::ios_base::binary );
 
   if (!input) {
-    res.status_code = 404;
+    response.status_code = 404;
     sock->write(response.to_string());
     return;
   }
