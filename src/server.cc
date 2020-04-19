@@ -64,8 +64,8 @@ void Server::handle(const Socket_t& sock) const {
 
   for (auto pair : route_map) {
     if (request.request_uri.compare(0, pair.first.length(), pair.first) == 0) {
-      HttpResponse res = handle_htdocs(request);
-      sock.write(res.to_string());
+      HttpResponse res = pair.second(request);
+      sock->write(res.to_string());
     }
   }
 }
