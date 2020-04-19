@@ -19,7 +19,7 @@ const std::map<const int, const std::string> default_status_reasons = {
     {503, "Service Unavailable"}, {504, "Gateway Time-out"}, {505, "HTTP Version not supported"}
 };
 
-std::string HttpResponse::to_string() const {
+std::string HttpResponse::to_string() {
     // TODO: Create a valid HTTP response string from the structure
     std::stringstream ss;
     // The following is an example of how to use stringstream.
