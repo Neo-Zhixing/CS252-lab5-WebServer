@@ -30,7 +30,14 @@ std::string HttpResponse::to_string() const {
 
     // Look at RFC 2616 Section 6 for details on how a response message looks:
     // https://tools.ietf.org/html/rfc2616#section-6
-    ss << http_version << " " << status_code << " ";
+
+    if (http_version.empty()) {
+        ss << "HTTP/1.1";
+    } else {
+        ss << http_version;
+    }
+
+    ss << " " << status_code << " ";
     
     if (this->reason_phrase.empty()) {
         auto default_reason_phrase = default_status_reasons.find(status_code);

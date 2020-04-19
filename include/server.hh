@@ -9,6 +9,8 @@ class Server {
     SocketAcceptor const& _acceptor;
 
  public:
+    std::string realm = "cs252";
+
     explicit Server(SocketAcceptor const& acceptor);
     void run_linear() const;
     void run_fork() const;
@@ -17,6 +19,9 @@ class Server {
 
 
     void handle(const Socket_t& sock) const;
+
+    bool authenticate(const HttpRequest& req) const;
+
     void get_request(const Socket_t& sock, HttpRequest& req) const;
 };
 

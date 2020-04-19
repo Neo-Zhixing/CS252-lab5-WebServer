@@ -54,8 +54,12 @@ void Server::handle(const Socket_t& sock) const {
   // TODO: implement parsing HTTP requests
   // recommendation:
   // void parse_request(const Socket_t& sock, HttpRequest* const request);
-  std::cout << "test" <<std::endl;
   request.print();
+
+
+  if (!authenticate(request, sock)) {
+    return;
+  }
 
   HttpResponse resp;
   // TODO: Make a response for the HTTP request
@@ -66,6 +70,27 @@ void Server::handle(const Socket_t& sock) const {
   resp.message_body = "Fuck CS252!";
   std::cout << resp.to_string() << std::endl;
   sock->write(resp.to_string());
+}
+
+bool Server::authenticate(const HttpRequest& req, const Socket_t& sock) const {
+  auto auth = req.headers.get("Authorization");
+  if (auth == req.headers.end()) {
+    // No Authorization header present
+    HttpResponse resp;
+    resp.status_code = 401;
+    resp.headers["WWW-Authenticate"] = "Basic realm=\"" + realm + "\"";
+    sock->write(resp.to_string());
+    return false;
+  }
+  auto encoded = auth->second;
+  if (encoded.compare("emhhbjMwODg6cFd4MEtSM0wK" != 0)) {
+    // Authentication failed
+    HttpResponse resp;
+    resp.status_code = 401;
+    sock->write(resp.to_string());
+    return false;
+  }
+  return true;
 }
 
 void Server::get_request(const Socket_t& sock, HttpRequest& req) const {
