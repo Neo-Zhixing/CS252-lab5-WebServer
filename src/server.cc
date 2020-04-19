@@ -74,19 +74,11 @@ void Server::handle(const Socket_t& sock) const {
 
 bool Server::authenticate(const HttpRequest& req, const Socket_t& sock) const {
   auto auth = req.headers.find("Authorization");
-  if (auth == req.headers.end()) {
+  if (auth == req.headers.end() || auth->second.compare("emhhbjMwODg6cFd4MEtSM0wK") != 0) {
     // No Authorization header present
     HttpResponse resp;
     resp.status_code = 401;
     resp.headers["WWW-Authenticate"] = "Basic realm=\"" + realm + "\"";
-    sock->write(resp.to_string());
-    return false;
-  }
-  auto encoded = auth->second;
-  if (encoded.compare("emhhbjMwODg6cFd4MEtSM0wK") != 0) {
-    // Authentication failed
-    HttpResponse resp;
-    resp.status_code = 401;
     sock->write(resp.to_string());
     return false;
   }
