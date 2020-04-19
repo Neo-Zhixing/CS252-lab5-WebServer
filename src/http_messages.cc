@@ -30,7 +30,7 @@ std::string HttpResponse::to_string() const {
     // https://tools.ietf.org/html/rfc2616#section-6
     std::string reason_phrase = this->reason_phrase;
     if (this->reason_phrase == NULL) {
-        reason_phrase = default_status_reasons.get(this.->status_code);
+        reason_phrase = default_status_reasons[this->status_code];
     }
     ss << http_version << " " << status_code << " " << reason_phrase << "\r\n";
     ss << "Connection: close\r\n";
