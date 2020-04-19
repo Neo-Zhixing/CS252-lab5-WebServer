@@ -1,4 +1,5 @@
 #include "http_messages.hh"
+#include <stdexcept>
 
 // You may find this map helpful. You can implement HttpResponse::to_string() such that
 // if no reason_phrase is set, then you try looking up a default_status_reason in this
@@ -31,7 +32,10 @@ std::string HttpResponse::to_string() const {
     ss << http_version << " " << status_code << " ";
     
     if (this->reason_phrase.empty()) {
-        default_status_reasons.find(status_code);
+        auto default_reason_phrase = default_status_reasons.find(status_code);
+        if (default_reason_phrase == default_status_reasons.end()) {
+            throw std::invalid_argument("Invalid status code");
+        }
     } else {
         ss << this->reason_phrase;
     }
