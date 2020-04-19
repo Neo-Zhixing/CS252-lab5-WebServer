@@ -11,7 +11,7 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
   // Get the request URI, verify the file exists and serve it
   std::cout << "http-root-dir/htdocs" + request.request_uri << std::endl;
 
-  ifstream input("http-root-dir/htdocs" + request.request_uri, ios_base::in | ios_base::binary );
+  std::ifstream input("http-root-dir/htdocs" + request.request_uri, ios_base::in | ios_base::binary );
 
   input.seekg(0, std::ios::end);
   size_t size = input.tellg();
