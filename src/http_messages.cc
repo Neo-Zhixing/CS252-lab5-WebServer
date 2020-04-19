@@ -28,10 +28,6 @@ std::string HttpResponse::to_string() const {
 
     // Look at RFC 2616 Section 6 for details on how a response message looks:
     // https://tools.ietf.org/html/rfc2616#section-6
-    std::string reason_phrase = this->reason_phrase;
-    if (this->reason_phrase == "") {
-        reason_phrase = ;
-    }
     ss << http_version << " " << status_code << " ";
     
     if (this->reason_phrase.empty()) {
