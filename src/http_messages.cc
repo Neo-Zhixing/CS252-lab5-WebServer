@@ -45,11 +45,11 @@ std::string HttpResponse::to_string() const {
 	}
 
     if (header.find("Content-Length") == header.end()) {
-        std::cout << "Content-Length: " << body.length << "\r\n";
+        std::cout << "Content-Length: " << message_body.length << "\r\n";
     }
     ss << "\r\n";
 
-    ss << body << "\r\n";
+    ss << message_body << "\r\n";
     return ss.str();
 }
 
