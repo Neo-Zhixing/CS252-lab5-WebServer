@@ -36,8 +36,9 @@ std::string HttpResponse::to_string() const {
         if (default_reason_phrase == default_status_reasons.end()) {
             throw std::invalid_argument("Invalid status code");
         }
+        ss << default_reason_phrase << "\r\n";
     } else {
-        ss << this->reason_phrase;
+        ss << this->reason_phrase << "\r\n";
     }
 
     for (std::pair<std::string, std::string> header : headers) {

@@ -62,7 +62,6 @@ void Server::handle(const Socket_t& sock) const {
   resp.status_code = 200;
   resp.reason_phrase = "OK";
   resp.headers["Connection"] = "close";
-  resp.headers["Content-Length"] = "11";
   resp.message_body = "Fuck CS252!";
   std::cout << resp.to_string() << std::endl;
   sock->write(resp.to_string());
