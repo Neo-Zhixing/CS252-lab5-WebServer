@@ -41,11 +41,11 @@ std::string HttpResponse::to_string() const {
     }
 
     for (std::pair<std::string, std::string> header : headers) {
-		std::cout << header.first << ": " << header.second << "\r\n";
+		ss << header.first << ": " << header.second << "\r\n";
 	}
 
     if (headers.find("Content-Length") == headers.end()) {
-        std::cout << "Content-Length: " << message_body.length() << "\r\n";
+        ss << "Content-Length: " << message_body.length() << "\r\n";
     }
     ss << "\r\n";
 
