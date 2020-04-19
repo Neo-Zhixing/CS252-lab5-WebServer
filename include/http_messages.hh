@@ -16,7 +16,6 @@ class HttpRequest {
     std::string query;  // implemented in Task 2.2
 
     void print() const;
-    void parse(const Socket_t& sock);
 };
 
 

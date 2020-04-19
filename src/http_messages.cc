@@ -55,16 +55,6 @@ std::string HttpResponse::to_string() const {
     return ss.str();
 }
 
-
-void HttpRequest::parse(const Socket_t& sock) {
-    auto line = sock.readline();
-    while ((auto pos = line.find(' ')) != std::string::npos) {
-        auto token = line.substr(0, pos);
-        std::cout << token << std::endl;
-        line.erase(0, pos + delimiter.length());
-    }
-}
-
 void HttpRequest::print() const {
     // Magic string to help with autograder
     std::cout << "\\\\==////REQ\\\\\\\\==////" << std::endl;
