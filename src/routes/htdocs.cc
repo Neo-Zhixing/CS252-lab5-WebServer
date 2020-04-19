@@ -9,10 +9,8 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
   response.http_version = request.http_version;
   // TODO: Task 1.3
   // Get the request URI, verify the file exists and serve it
-  std::cout << "http-root-dir/htdocs" + request.request_uri << std::endl;
 
-  std::ifstream input;
-  input.open("http-root-dir/htdocs" + request.request_uri, std::ios_base::in | std::ios_base::binary );
+  std::ifstream input("http-root-dir/htdocs" + request.request_uri, std::ios_base::in | std::ios_base::binary );
 
   if (!input) {
     response.status_code = 404;
@@ -21,9 +19,13 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
   }
 
   input.seekg(0, std::ios::end);
-  size_t size = input.tellg();
+  streampos size = input.tellg();
+  if (!input) {
+    response.status_code = 404;
+    sock->write(response.to_string());
+    return;
+  }
   if (size > 0) {
-    std::cout << "file size:  a " << size << std::endl;
     char * buf = new char[size];
     input.seekg(0, std::ios::beg);
     
