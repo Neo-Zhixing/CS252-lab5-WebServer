@@ -31,6 +31,7 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
 
     sock->write(response.to_string());
     sock->write(buf, size);
+    delete[] buf;
   } else {
     response.headers["Content-Length"] = "0";
 
@@ -38,5 +39,5 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
   }
 
 
-  delete[] buf;
+  
 }
