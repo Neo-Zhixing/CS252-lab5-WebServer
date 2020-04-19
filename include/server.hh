@@ -2,6 +2,7 @@
 #define INCLUDE_SERVER_HH_
 
 #include "socket.hh"
+#include "http_messages.hh"
 
 class Server {
  private:
