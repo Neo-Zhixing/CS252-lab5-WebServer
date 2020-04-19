@@ -53,12 +53,17 @@ void Server::handle(const Socket_t& sock) const {
   // TODO: implement parsing HTTP requests
   // recommendation:
   // void parse_request(const Socket_t& sock, HttpRequest* const request);
-  std::cout << test <<std::endl;
+  std::cout << "test" <<std::endl;
   request.print();
 
   HttpResponse resp;
   // TODO: Make a response for the HTTP request
   resp.http_version = "HTTP/1.1";
+  resp.status_code = 200;
+  resp.reason_phrase = "OK";
+  resp.headers["Connection"] = "close";
+  resp.headers["Content-Length"] = 11;
+  resp.message_body = "Fuck CS252!";
   std::cout << resp.to_string() << std::endl;
   sock->write(resp.to_string());
 }

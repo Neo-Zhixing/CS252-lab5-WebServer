@@ -28,11 +28,19 @@ std::string HttpResponse::to_string() const {
 
     // Look at RFC 2616 Section 6 for details on how a response message looks:
     // https://tools.ietf.org/html/rfc2616#section-6
-    ss << http_version << " 200 OK\r\n";
-    ss << "Connection: close\r\n";
-    ss << "Content-Length: 12\r\n";
+    ss << http_version << " " << status_code << " ";
+    
+    if (this->reason_phrase.empty()) {
+        const std::string aa = default_status_reasons[status_code];
+        ss << aa;
+    } else {
+        ss << this->reason_phrase;
+    }
     ss << "\r\n";
-    ss << "Hello CS252!\r\n";
+    ss << "Connection: close\r\n";
+    ss << "Content-Length: 11\r\n";
+    ss << "\r\n";
+    ss << "Fuck CS252!\r\n";
     return ss.str();
 }
 
