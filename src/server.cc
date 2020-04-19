@@ -75,10 +75,14 @@ void Server::get_request(const Socket_t& sock, HttpRequest& req) const {
   int state = 0;
   while ((pos = line.find(' ')) != std::string::npos) {
       auto token = line.substr(0, pos);
-      switch state {
+      switch (state) {
         0: req.method = token;break;
         1: req.status_code = std::stoi(token);break;
         2: req.http_version = token;break;
+        default: throw std::invalid_argument("Extra token on the first line"); 
+      }
+      if (state !== 2) {
+        throw std::invalid_argument("Unexpected end of line on the first line");
       }
       std::cout << token << std::endl;
       line.erase(0, pos + 1);
