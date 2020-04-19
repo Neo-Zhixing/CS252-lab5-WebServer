@@ -26,6 +26,7 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
     input.seekg(0, std::ios::beg);
     
     input >> buf;
+    std::cout << "file content: " << buf << std::endl;
     response.status_code = 200;
     response.headers["Content-Length"] = std::to_string(size);
 
@@ -37,7 +38,5 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
 
     sock->write(response.to_string());
   }
-
-
   
 }
