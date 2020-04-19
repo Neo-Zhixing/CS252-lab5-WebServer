@@ -75,7 +75,7 @@ void Server::handle(const Socket_t& sock) const {
 bool Server::authenticate(const HttpRequest& req, const Socket_t& sock) const {
   auto auth = req.headers.find("Authorization");
   if (auth != req.headers.end()) {
-    std::cout << "Auth header is " << auth->second << std::endl;
+    std::cout << "Auth header is " << auth->second  << "|" << std::endl;
     std::cout << (auth->second.compare("Basic emhhbjMwODg6cFd4MEtSM0w=") == 0 ? "Success" : "Failure") << std::endl;
   }
   if (auth == req.headers.end() || auth->second.compare("Basic emhhbjMwODg6cFd4MEtSM0w=") != 0) {
