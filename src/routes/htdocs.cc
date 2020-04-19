@@ -15,6 +15,9 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
   if (querystr_pos != std::string::npos) {
     uri = uri.substr(0, querystr_pos);
   }
+  if (uri.back == '/') {
+    uri = uri + "index.html";
+  }
 
   std::ifstream input("http-root-dir/htdocs" + uri, std::ios_base::in | std::ios_base::binary );
 
