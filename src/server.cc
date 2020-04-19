@@ -91,7 +91,6 @@ bool Server::authenticate(const HttpRequest& req, const Socket_t& sock) const {
 
 void Server::get_request(const Socket_t& sock, HttpRequest& req) const {
   auto line = sock->readline();
-  std::cout << line << std::endl;
   std::size_t pos;
   int state = 0;
   while ((pos = line.find(' ')) != std::string::npos) {
@@ -125,6 +124,6 @@ void Server::get_request(const Socket_t& sock, HttpRequest& req) const {
       // No longer a header
       break;
     }
-    req.headers[line.substr(0, pos)] = line.substr(pos+2);
+    req.headers[line.substr(0, pos)] = line.substr(pos+2, line.size() - 2);
   }
 }
