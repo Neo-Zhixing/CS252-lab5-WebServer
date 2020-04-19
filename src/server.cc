@@ -74,6 +74,7 @@ void Server::handle(const Socket_t& sock) const {
 
 bool Server::authenticate(const HttpRequest& req, const Socket_t& sock) const {
   auto auth = req.headers.find("Authorization");
+  std::cout << auth->second << std::endl;
   if (auth == req.headers.end() || auth->second.compare("emhhbjMwODg6cFd4MEtSM0wK") != 0) {
     // No Authorization header present
     HttpResponse resp;
