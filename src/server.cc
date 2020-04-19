@@ -67,9 +67,8 @@ void Server::handle(const Socket_t& sock) const {
   sock->write(resp.to_string());
 }
 
-HttpRequest Server::get_request(const Socket_t& sock, HttpRequest& req) const {
+void Server::get_request(const Socket_t& sock, HttpRequest& req) const {
   auto line = sock->readline();
-  HTTPRequest req;
   std::cout << line << std::endl;
   //std::size_t pos;
   //while ((pos = line.find(' ')) != std::string::npos) {
@@ -77,5 +76,4 @@ HttpRequest Server::get_request(const Socket_t& sock, HttpRequest& req) const {
   //    std::cout << token << std::endl;
   //    line.erase(0, pos + 1);
   //}
-  return req;
 }
