@@ -26,7 +26,7 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
   
   input >> buf;
   response.status_code = 200;
-  response.headers['Content-Length'] = size;
+  response.headers['Content-Length'] = size.to_string();
 
   sock->write(response.to_string());
   sock->write(buf, size);
