@@ -45,7 +45,7 @@ std::string HttpResponse::to_string() const {
 	}
 
     if (headers.find("Content-Length") == headers.end()) {
-        std::cout << "Content-Length: " << message_body.length << "\r\n";
+        std::cout << "Content-Length: " << message_body.length() << "\r\n";
     }
     ss << "\r\n";
 
