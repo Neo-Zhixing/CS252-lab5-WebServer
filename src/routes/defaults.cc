@@ -7,6 +7,6 @@ void handle_default(const HttpRequest& request, const Socket_t& sock) {
   HttpResponse response;
   response.http_version = request.http_version;
   response.status_code = 404;
-  sock->send(response.to_string());
+  sock->write(response.to_string());
 }
 

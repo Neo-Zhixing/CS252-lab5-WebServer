@@ -18,7 +18,7 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
   
   input >> buf;
 
-  sock->send(response.to_string());
-  sock->send(buf, size);
+  sock->write(response.to_string());
+  sock->write(buf, size);
   delete[] buf;
 }
