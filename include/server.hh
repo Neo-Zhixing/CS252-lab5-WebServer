@@ -23,6 +23,7 @@ class Server {
     bool authenticate(const HttpRequest& req, const Socket_t& sock) const;
 
     void get_request(const Socket_t& sock, HttpRequest& req) const;
+    void handle_file(const Socket_t& sock) const;
 };
 
 #endif  // INCLUDE_SERVER_HH_
