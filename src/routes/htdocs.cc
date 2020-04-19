@@ -19,7 +19,7 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
   }
 
   input.seekg(0, std::ios::end);
-  streampos size = input.tellg();
+  std::streampos size = input.tellg();
   if (!input) {
     response.status_code = 404;
     sock->write(response.to_string());
@@ -37,7 +37,7 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
     sock->write(buf, size);
     delete[] buf;
   } else {
-    response.headers["Content-Length"] = "0";
+    response.status_code = 404;
 
     sock->write(response.to_string());
   }
