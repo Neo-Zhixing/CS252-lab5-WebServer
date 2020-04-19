@@ -1,4 +1,5 @@
 #include "http_messages.hh"
+#include "socket.hh"
 
 // You could implement your logic for handling /cgi-bin requests here
 
