@@ -31,7 +31,8 @@ std::string HttpResponse::to_string() const {
     ss << http_version << " " << status_code << " ";
     
     if (this->reason_phrase.empty()) {
-        ss << default_status_reasons[status_code];
+        const std::string aa = default_status_reasons[status_code];
+        ss << aa;
     } else {
         ss << this->reason_phrase;
     }
