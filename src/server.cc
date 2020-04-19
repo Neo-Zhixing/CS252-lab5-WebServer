@@ -67,7 +67,7 @@ void Server::handle(const Socket_t& sock) const {
   sock->write(resp.to_string());
 }
 
-HttpRequest Server::get_request(const Socket_t& sock) const {
+HttpRequest Server::get_request(const Socket_t& sock, HTTPRequest& req) const {
   auto line = sock->readline();
   HTTPRequest req;
   std::cout << line << std::endl;
