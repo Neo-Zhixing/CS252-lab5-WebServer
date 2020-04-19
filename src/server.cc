@@ -81,7 +81,7 @@ void Server::get_request(const Socket_t& sock, HttpRequest& req) const {
         case 2: req.http_version = token;break;
         default: throw std::invalid_argument("Extra token on the first line"); 
       }
-      if (state !== 2) {
+      if (state != 2) {
         throw std::invalid_argument("Unexpected end of line on the first line");
       }
       std::cout << token << std::endl;
