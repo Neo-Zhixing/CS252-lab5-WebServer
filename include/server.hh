@@ -17,7 +17,7 @@ class Server {
 
 
     void handle(const Socket_t& sock) const;
-    void get_request(const Socket_t& sock, const HttpRequest& req) const;
+    void get_request(const Socket_t& sock, HttpRequest& req) const;
 };
 
 #endif  // INCLUDE_SERVER_HH_
