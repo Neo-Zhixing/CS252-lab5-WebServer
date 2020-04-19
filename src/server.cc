@@ -48,7 +48,7 @@ std::vector<Route_t> route_map = {
 };
 */
 
-void Server::handle_file(const Socket_t& sock) const {
+
   HttpResponse resp;
   // TODO: Make a response for the HTTP request
   resp.http_version = "HTTP/1.1";
@@ -73,7 +73,8 @@ void Server::handle(const Socket_t& sock) const {
     return;
   }
 
-  handle_file(sock);
+  HttpResponse res = handle_htdocs(request);
+  sock->write(res.to_string());
 }
 
 bool Server::authenticate(const HttpRequest& req, const Socket_t& sock) const {
