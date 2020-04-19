@@ -94,5 +94,5 @@ void Server::get_request(const Socket_t& sock, HttpRequest& req) const {
   if (state != 2) {
     throw std::invalid_argument("Unexpected end of line on the first line");
   }
-  req.http_version = line.substr(line.size()-2);
+  req.http_version = line.substr(0, line.size()-2);
 }
