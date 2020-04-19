@@ -72,8 +72,14 @@ void Server::get_request(const Socket_t& sock, HttpRequest& req) const {
   auto line = sock->readline();
   std::cout << line << std::endl;
   std::size_t pos;
+  int state = 0;
   while ((pos = line.find(' ')) != std::string::npos) {
       auto token = line.substr(0, pos);
+      switch state {
+        0: req.method = token;break;
+        1: req.status_code = std::stoi(token);break;
+        2: req.http_version = token;break;
+      }
       std::cout << token << std::endl;
       line.erase(0, pos + 1);
   }
