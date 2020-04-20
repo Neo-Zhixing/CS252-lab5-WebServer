@@ -42,14 +42,23 @@ void Server::run_fork() const {
 void Server::run_thread() const {
   while (1) {
     Socket_t sock = _acceptor.accept_connection();
-    std::cout << "created" << std::endl;
     std::thread thread_obj = std::thread(&Server::handle, this, std::move(sock));
     thread_obj.detach();
   }
 }
 
+void Server::run_thread_pool_worker() const {
+  while(true) {
+    Socket_t sock = _acceptor.accept_connection();
+    handle(std::move(sock));
+  }
+}
+
 void Server::run_thread_pool(const int num_threads) const {
-  // TODO: Task 1.4
+  for (int i = 0; i < num_threads; i++) {
+    std::thread thread_obj = std::thread(&Server::run_thread_pool_worker, this);
+  }
+  run_thread_pool_worker();
 }
 
 // example route map. you could loop through these routes and find the first route which
@@ -65,7 +74,6 @@ std::vector<Route_t> route_map = {
 
 
 void Server::handle(const Socket_t sock) const {
-  std::cout << "got to handle" << std::endl;
   HttpRequest request;
   get_request(sock, request);
   // TODO: implement parsing HTTP requests
