@@ -43,9 +43,7 @@ void Server::run_thread() const {
   while (1) {
     Socket_t sock = _acceptor.accept_connection();
     std::cout << "created" << std::endl;
-    std::thread thread_obj = std::thread([this](const Socket_t sock){
-      handle(sock);
-    }, sock);
+    std::thread thread_obj = std::thread(&Server::handle, this, sock);
     thread_obj.detach();
   }
 }
@@ -66,7 +64,7 @@ std::vector<Route_t> route_map = {
 
 
 
-void Server::handle(const Socket_t& sock) const {
+void Server::handle(const Socket_t sock) const {
   std::cout << "got to handle" << std::endl;
   HttpRequest request;
   get_request(sock, request);

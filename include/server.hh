@@ -18,7 +18,7 @@ class Server {
     void run_thread() const;
 
 
-    void handle(const Socket_t& sock) const;
+    void handle(const Socket_t sock) const;
 
     bool authenticate(const HttpRequest& req, const Socket_t& sock) const;
 
