@@ -42,11 +42,7 @@ void Server::run_fork() const {
 void Server::run_thread() const {
   while (1) {
     Socket_t sock = _acceptor.accept_connection();
-    // When the thread ends resources are recycled
-    pthread_attr_t attr;
-    pthread_attr_init(&attr);
-    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-    pthread_create(&thread, &attr, handle, sock);
+    std::thread thread_obj(handle, sock);
   }
 }
 
