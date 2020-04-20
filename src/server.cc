@@ -26,7 +26,20 @@ void Server::run_linear() const {
 }
 
 void Server::run_fork() const {
-  // TODO: Task 1.4
+  while (1) {
+    Socket_t sock = _acceptor.accept_connection();
+
+    int ret = fork();
+    if (ret == 0) {
+      // Child process
+      handle(sock);
+      exit(0);
+    }
+  }
+}
+
+void forkServer( int masterSocket) {
+
 }
 
 void Server::run_thread() const {
