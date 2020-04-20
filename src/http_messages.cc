@@ -1,4 +1,6 @@
 #include "http_messages.hh"
+#include <stdexcept>
+#include "socket.hh"
 
 // You may find this map helpful. You can implement HttpResponse::to_string() such that
 // if no reason_phrase is set, then you try looking up a default_status_reason in this
@@ -28,19 +30,37 @@ std::string HttpResponse::to_string() const {
 
     // Look at RFC 2616 Section 6 for details on how a response message looks:
     // https://tools.ietf.org/html/rfc2616#section-6
-    ss << http_version << " " << status_code << " ";
+
+    if (http_version.empty()) {
+        ss << "HTTP/1.1";
+    } else {
+        ss << http_version;
+    }
+
+    ss << " " << status_code << " ";
     
     if (this->reason_phrase.empty()) {
-        const std::string aa = default_status_reasons[status_code];
-        ss << aa;
+        auto default_reason_phrase = default_status_reasons.find(status_code);
+        if (default_reason_phrase == default_status_reasons.end()) {
+            throw std::invalid_argument("Invalid status code");
+        }
+        ss << default_reason_phrase->second << "\r\n";
     } else {
-        ss << this->reason_phrase;
+        ss << this->reason_phrase << "\r\n";
+    }
+
+    for (std::pair<std::string, std::string> header : headers) {
+		ss << header.first << ": " << header.second << "\r\n";
+	}
+
+    if (headers.find("Content-Length") == headers.end()) {
+        ss << "Content-Length: " << message_body.length() << "\r\n";
     }
     ss << "\r\n";
-    ss << "Connection: close\r\n";
-    ss << "Content-Length: 11\r\n";
-    ss << "\r\n";
-    ss << "Fuck CS252!\r\n";
+
+    if (!message_body.empty()) {
+      ss << message_body << "\r\n";
+    }
     return ss.str();
 }
 

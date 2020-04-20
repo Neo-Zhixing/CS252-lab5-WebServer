@@ -10,6 +10,9 @@
 #include <cstdio>
 #include <iostream>
 
+#include <sys/types.h>
+#include <sys/wait.h>
+
 #include "server.hh"
 #include "socket.hh"
 #include "tcp.hh"
@@ -26,6 +29,10 @@ extern "C" void signal_handler(int signal) {
     exit(0);
 }
 
+extern "C" void killzombie(int signal) {
+    while(waitpid(-1, NULL, WNOHANG) > 0);
+}
+
 int main(int argc, char** argv) {
     struct rlimit mem_limit = { .rlim_cur = 40960000, .rlim_max = 91280000 };
     struct rlimit cpu_limit = { .rlim_cur = 300, .rlim_max = 600 };
@@ -39,6 +46,12 @@ int main(int argc, char** argv) {
     if (setrlimit(RLIMIT_NPROC, &nproc_limit)) {
         perror("Couldn't set NPROC limit\n");
     }
+
+    struct sigaction skillzombie;
+	skillzombie.sa_handler = killzombie;
+	sigemptyset(&skillzombie.sa_mask);
+	skillzombie.sa_flags = SA_RESTART;
+	sigaction(SIGCHLD, &skillzombie, NULL );
 
     struct sigaction sa;
     sa.sa_handler = signal_handler;

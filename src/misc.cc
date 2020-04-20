@@ -68,10 +68,11 @@ std::string get_content_type(const std::string& filename) {
         close(pipe_fd[0]);  // close read end
 
         int status;
-        if (waitpid(pid, &status, 0) == -1) {
-            perror("get_content_type waitpid error");
-            exit(-1);
-        }
+        waitpid(pid, &status, 0);
+        //if (waitpid(pid, &status, 0) == -1) {
+        //    perror("get_content_type waitpid error");
+        //    exit(-1);
+        //}
         if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
             std::cerr << "get_content_type returned nonzero status for " << filename << std::endl;
             response.clear();
