@@ -23,7 +23,7 @@ Server::Server(SocketAcceptor const& acceptor) : _acceptor(acceptor) { }
 void Server::run_linear() const {
   while (1) {
     Socket_t sock = _acceptor.accept_connection();
-    handle(sock);
+    handle(std::move(sock));
   }
 }
 
@@ -33,7 +33,7 @@ void Server::run_fork() const {
     int ret = fork();
     if (ret == 0) {
       // Child process
-      handle(sock);
+      handle(std::move(sock));
       exit(0);
     }
   }
@@ -43,7 +43,7 @@ void Server::run_thread() const {
   while (1) {
     Socket_t sock = _acceptor.accept_connection();
     std::cout << "created" << std::endl;
-    std::thread thread_obj = std::thread(&Server::handle, this, sock);
+    std::thread thread_obj = std::thread(&Server::handle, this, std::move(sock));
     thread_obj.detach();
   }
 }
