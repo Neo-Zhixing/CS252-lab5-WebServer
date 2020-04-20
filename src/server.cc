@@ -57,6 +57,7 @@ void Server::run_thread_pool_worker() const {
 void Server::run_thread_pool(const int num_threads) const {
   for (int i = 0; i < num_threads; i++) {
     std::thread thread_obj = std::thread(&Server::run_thread_pool_worker, this);
+    thread_obj.detach();
   }
   run_thread_pool_worker();
 }
