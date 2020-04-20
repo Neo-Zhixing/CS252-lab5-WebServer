@@ -10,6 +10,9 @@
 #include <cstdio>
 #include <iostream>
 
+#include <sys/types.h>
+#include <sys/wait.h>
+
 #include "server.hh"
 #include "socket.hh"
 #include "tcp.hh"
