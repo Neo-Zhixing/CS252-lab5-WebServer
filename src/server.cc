@@ -40,6 +40,12 @@ void Server::run_fork() const {
 }
 
 void Server::run_thread() const {
+  while (1) {
+    Socket_t sock = _acceptor.accept_connection();
+    std::thread thread_obj = std::thread([sock](){
+      handle(sock)
+    })
+  }
 }
 
 void Server::run_thread_pool(const int num_threads) const {
