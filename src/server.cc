@@ -43,7 +43,7 @@ void Server::run_fork() const {
 void Server::run_thread() const {
   while (1) {
     Socket_t sock = _acceptor.accept_connection();
-    std::thread thread_obj(&Server::handle, this, &sock);
+    std::thread thread_obj(&Server::handle, this, sock.get());
   }
 }
 
