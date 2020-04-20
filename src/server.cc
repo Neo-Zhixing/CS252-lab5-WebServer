@@ -29,10 +29,10 @@ void Server::run_linear() const {
 
 void Server::run_fork() const {
   while (1) {
+    Socket_t sock = _acceptor.accept_connection();
     int ret = fork();
     if (ret == 0) {
       // Child process
-      Socket_t sock = _acceptor.accept_connection();
       handle(sock);
       exit(0);
     }
