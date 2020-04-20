@@ -39,12 +39,17 @@ void Server::run_fork() const {
   }
 }
 
-void forkServer( int masterSocket) {
-
-}
-
 void Server::run_thread() const {
-  // TODO: Task 1.4
+  while (1) {
+    Socket_t sock = _acceptor.accept_connection();
+    if (slaveSocket >= 0) {
+      // When the thread ends resources are recycled
+      pthread_attr_t attr;
+      pthread_attr_init(&attr);
+      pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+      pthread_create(&thread, &attr, handle, sock);
+    }
+  }
 }
 
 void Server::run_thread_pool(const int num_threads) const {
