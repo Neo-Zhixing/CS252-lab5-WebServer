@@ -45,9 +45,9 @@ int main(int argc, char** argv) {
     }
 
     struct sigaction skillzombie;
-	signalAction.sa_handler = killzombie;
+	skillzombie.sa_handler = killzombie;
 	sigemptyset(&skillzombie.sa_mask);
-	signalAction.sa_flags = SA_RESTART;
+	skillzombie.sa_flags = SA_RESTART;
 	sigaction(SIGCHLD, &signalAction, NULL );
 
     struct sigaction sa;
