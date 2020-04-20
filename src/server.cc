@@ -44,6 +44,7 @@ void Server::run_thread() const {
     Socket_t sock = _acceptor.accept_connection();
     std::cout << "created" << std::endl;
     std::thread thread_obj = std::thread(&Server::handle, this, std::ref(sock));
+    thread_obj.detach();
   }
 }
 
