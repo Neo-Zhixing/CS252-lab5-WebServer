@@ -17,23 +17,13 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     original_querystring = request.message_body;
   }
 
-  std::vector<std::string> querystrings;
-  boost::split(querystrings, original_querystring, boost::is_any_of("&"));
-  std::map<std::string, std::string> querymap;
-
-  for (auto str : querystrings) {
-    size_t pos = str.find('=');
-    if (pos != std::string::npos)
-    {
-      std::cout << "Found query string" << str.substr(0, pos) << ":" << str.substr(pos+1) << std::endl;
-      querymap[str.substr(0, pos)] = str.substr(pos+1);
-    } else {
-      std::cout << "Found empty query string" << str << std::endl;
-      querymap[str] = "";
-    }
+  if ((int pid = fork()) == 0) {
+    // Is child
+    setenv("REQUEST_METHOD", request.method);
+    setenv("QUERY_STRING", original_querystring);
+  } else {
+    // Is parent
   }
-
-  std::cout << request.query << std::endl;
-
+  
   sock->write(response.to_string());
 }
