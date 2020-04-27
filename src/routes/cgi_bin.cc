@@ -43,9 +43,12 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     _exit(1);
   } else {
     // Is parent
-    std::cout << "About to send to socket " << sock->getSocket() << std::endl;
     close(writefd);
-    dup2(readfd, sock->getSocket());
+    std::cout << "About to send to socket " << sock->getSocket() << std::endl;
+    char buf[128];
+    while(fgets(buf,128,fdread)){
+      std::cout << "Read" << buf << std::endl;
+    }
     waitpid(ret, NULL, 0);
   }
   
