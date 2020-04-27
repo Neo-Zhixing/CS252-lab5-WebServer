@@ -10,6 +10,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
   HttpResponse response;
   response.http_version = request.http_version;
   response.status_code = 200;
+  sock->write(response.to_string());
 
   std::string original_querystring;
   if (request.method.compare("GET") == 0) {
@@ -56,6 +57,4 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     }
     waitpid(ret, NULL, 0);
   }
-  
-  sock->write(response.to_string());
 }
