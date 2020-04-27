@@ -27,8 +27,10 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     size_t index = program_name.find('?');
     if (index != std::string::npos)
       program_name.erase(index);
+
+    auto args = {program_name.c_str()};
     std::cout << "About to run " << program_name << std::endl;
-    execvp(program_name.c_str());
+    execvp(program_name.c_str(), args);
   } else {
     // Is parent
   }
