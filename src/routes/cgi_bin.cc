@@ -17,6 +17,11 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
   } else {
     original_querystring = request.message_body;
   }
+  int fdpipe[2];
+  pipe(fdpipe);
+
+
+  
 
   int ret = fork();
   if (ret == 0) {
