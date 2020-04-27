@@ -46,7 +46,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     close(writefd);
     std::cout << "About to send to socket " << sock->getSocket() << std::endl;
     char buf[128];
-    while(fgets(buf,128,fdread)){
+    while(fgets(buf,128,readfd)){
       std::cout << "Read" << buf << std::endl;
     }
     waitpid(ret, NULL, 0);
