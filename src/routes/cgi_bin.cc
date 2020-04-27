@@ -23,12 +23,12 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     setenv("REQUEST_METHOD", request.method.c_str(), 1);
     setenv("QUERY_STRING", original_querystring.c_str(), 1);
     std::string program_name = request.request_uri;
-    program_name.erase(0, 9);
+    //program_name.erase(0, 9);
     size_t index = program_name.find('?');
     if (index != std::string::npos)
       program_name.erase(index);
     std::cout << "About to run " << program_name << std::endl;
-
+    execvp(program_name, program_name);
   } else {
     // Is parent
   }
