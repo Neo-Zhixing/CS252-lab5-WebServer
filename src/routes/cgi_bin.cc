@@ -27,7 +27,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
   if (ret == 0) {
     close(readfd);
     // Is child
-    dup2(writefd, 1); // Redirect stdout to the pipe
+    //dup2(writefd, 1); // Redirect stdout to the pipe
     setenv("REQUEST_METHOD", request.method.c_str(), 1);
     setenv("QUERY_STRING", original_querystring.c_str(), 1);
     std::string program_name = "http-root-dir" + request.request_uri;
