@@ -26,6 +26,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     size_t pos = str.find('/');
     if (pos != std::string::npos)
     {
+      std::cout << "Found query string" << str.substr(0, pos) << ":" << str.substr(pos+1) << std::endl;
       querymap[str.substr(0, pos)] = str.substr(pos+1);
     } else {
       querymap[str] = "";
