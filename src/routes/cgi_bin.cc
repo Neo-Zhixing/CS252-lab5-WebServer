@@ -2,6 +2,7 @@
 #include "socket.hh"
 #include <iostream>
 #include <map>
+#include <vector>
 #include <boost/algorithm/string.hpp> 
 
 void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
