@@ -44,7 +44,6 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
   } else {
     // Is parent
     close(writefd);
-    std::cout << "About to send to socket " << sock->getSocket() << std::endl;
     char buf[128];
     while(read(readfd, buf, 128) > 0){
       std::cout << "Read" << buf << std::endl;
