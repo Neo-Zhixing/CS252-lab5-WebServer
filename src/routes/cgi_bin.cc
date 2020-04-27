@@ -29,7 +29,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
       program_name.erase(index);
 
     char *argv[1];
-    argv[0] = const_cast<char *> program_name.c_str();
+    argv[0] = const_cast<char *>(program_name.c_str());
     std::cout << "About to run " << program_name << std::endl;
     execvp(argv[0], argv);
   } else {
