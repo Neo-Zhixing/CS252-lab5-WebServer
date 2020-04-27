@@ -3,7 +3,8 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include <boost/algorithm/string.hpp> 
+#include <boost/algorithm/string.hpp>
+#include <sys/wait.h>
 
 void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
   HttpResponse response;
