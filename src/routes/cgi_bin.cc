@@ -20,7 +20,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
   int ret = fork();
   if (ret == 0) {
     // Is child
-    setenv("REQUEST_METHOD", request.method);
+    setenv("REQUEST_METHOD", request.method.c_str());
     setenv("QUERY_STRING", original_querystring);
   } else {
     // Is parent
