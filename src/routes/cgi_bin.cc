@@ -17,7 +17,8 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     original_querystring = request.message_body;
   }
 
-  if ((int pid = fork()) == 0) {
+  int ret = fork();
+  if (ret == 0) {
     // Is child
     setenv("REQUEST_METHOD", request.method);
     setenv("QUERY_STRING", original_querystring);
