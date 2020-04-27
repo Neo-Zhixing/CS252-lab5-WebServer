@@ -21,6 +21,9 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
   boost::split(querystrings, original_querystring, boost::is_any_of("&")); 
 
 
+  for (auto str : querystrings) {
+    std::cout << str << "lalal" << std::endl;
+  }
 
   std::cout << request.query << std::endl;
 
