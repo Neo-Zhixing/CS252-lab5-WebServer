@@ -22,7 +22,10 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     // Is child
     setenv("REQUEST_METHOD", request.method.c_str(), 1);
     setenv("QUERY_STRING", original_querystring.c_str(), 1);
-    std::cout << "About to run " << request.request_uri << std::endl;
+    std::string program_name = request.request_uri;
+    program_name.erase(0, 9);
+    std::cout << "About to run " << program_name << std::endl;
+
   } else {
     // Is parent
   }
