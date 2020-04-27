@@ -28,7 +28,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     if (index != std::string::npos)
       program_name.erase(index);
     std::cout << "About to run " << program_name << std::endl;
-    execvp(program_name.c_str(), program_name.c_str());
+    execvp(program_name.c_str());
   } else {
     // Is parent
   }
