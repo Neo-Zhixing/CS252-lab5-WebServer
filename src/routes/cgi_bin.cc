@@ -13,7 +13,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
   if (request.method.compare("GET") == 0) {
     original_querystring = request.query;
   } else {
-    original_querystring = request.body;
+    original_querystring = request.message_body;
   }
 
   std::vector<std::string> querystrings; 
