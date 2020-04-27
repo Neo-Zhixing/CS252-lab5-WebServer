@@ -18,12 +18,18 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
   }
 
   std::vector<std::string> querystrings;
-  std::cout << original_querystring << std::endl;
-  boost::split(querystrings, original_querystring, boost::is_any_of("&")); 
-
+  boost::split(querystrings, original_querystring, boost::is_any_of("&"));
+  std::map<std::string, std::string> querymap;
 
   for (auto str : querystrings) {
     std::cout << str << "lalal" << std::endl;
+    size_t pos = str.find('/');
+    if (pos != std::string::npos)
+    {
+      querymap[str.substr(0, pos)] = s.substr(pos+1);
+    } else {
+      querymap[str] = "";
+    }
   }
 
   std::cout << request.query << std::endl;
