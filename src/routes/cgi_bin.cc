@@ -23,7 +23,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     // Is child
     setenv("REQUEST_METHOD", request.method.c_str(), 1);
     setenv("QUERY_STRING", original_querystring.c_str(), 1);
-    std::string program_name = request.request_uri;
+    std::string program_name = "http-root-dir/" + request.request_uri;
     //program_name.erase(0, 9);
     size_t index = program_name.find('?');
     if (index != std::string::npos)
