@@ -45,8 +45,13 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     // Is parent
     close(writefd);
     char buf[128];
-    while(read(readfd, buf, 128) > 0){
-      std::cout << "Read" << buf << std::endl;
+    while(true){
+      int len = read(readfd, buf, 128);
+      if (len <= 0) {
+        break;
+      }
+      std::cout << "Read " << buf << std::endl;
+      sock->write(buf, len);
     }
     waitpid(ret, NULL, 0);
   }
