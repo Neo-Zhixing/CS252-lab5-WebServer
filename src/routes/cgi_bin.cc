@@ -21,7 +21,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
   pipe(fdpipe);
 
 
-  
+  std::cout << "About to send to socket " << sock.getSocket() << std::endl;
 
   int ret = fork();
   if (ret == 0) {
