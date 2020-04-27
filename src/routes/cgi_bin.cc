@@ -17,7 +17,8 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     original_querystring = request.message_body;
   }
 
-  std::vector<std::string> querystrings; 
+  std::vector<std::string> querystrings;
+  std::cout << original_querystring << std::endl;
   boost::split(querystrings, original_querystring, boost::is_any_of("&")); 
 
 
