@@ -33,7 +33,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     std::cout << "About to run " << program_name << std::endl;
     execvp(argv[0], argv);
   } else {
-    // Is parent
+    waitpid(ret);
   }
   
   sock->write(response.to_string());
