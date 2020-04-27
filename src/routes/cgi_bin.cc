@@ -22,13 +22,13 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
   std::map<std::string, std::string> querymap;
 
   for (auto str : querystrings) {
-    std::cout << str << "lalal" << std::endl;
-    size_t pos = str.find('/');
+    size_t pos = str.find('=');
     if (pos != std::string::npos)
     {
       std::cout << "Found query string" << str.substr(0, pos) << ":" << str.substr(pos+1) << std::endl;
       querymap[str.substr(0, pos)] = str.substr(pos+1);
     } else {
+      std::cout << "Found empty query string" << str << std::endl;
       querymap[str] = "";
     }
   }
