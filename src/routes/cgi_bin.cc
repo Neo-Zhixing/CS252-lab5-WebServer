@@ -8,7 +8,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
   response.http_version = request.http_version;
   // TODO: Task 2.2
 
-  std::cout << response.querystring << std::endl;
+  std::cout << request.query << std::endl;
 
   sock->write(response.to_string());
 }
