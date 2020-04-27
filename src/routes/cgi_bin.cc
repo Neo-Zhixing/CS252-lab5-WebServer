@@ -34,7 +34,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     std::cout << "About to run " << program_name << std::endl;
     execvp(argv[0], argv);
   } else {
-    waitpid(ret);
+    waitpid(ret, NULL);
   }
   
   sock->write(response.to_string());
