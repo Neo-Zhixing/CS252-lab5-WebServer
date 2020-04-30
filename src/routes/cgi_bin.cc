@@ -30,6 +30,23 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
   }
 }
 
+void handle_loadable(std::string& program_name, std::string& original_querystring, int socketfd, const HttpRequest& request) {
+  void *dlo = dlopen(docpath, RTLD_LAZY);
+  if (!dlo) {
+    std::cout << "Can't load " << program_name << " with error " << dlerror() << std::endl;
+  }
+
+  void (*dls)(int, char *);
+	*(void **)(&dls) = dlsym(dlo, "httprun");
+	char *error;
+	if ((error = dlerror()) != NULL)  {
+    std::cout << "Can't find httprun. " << error << std::endl;
+		return;
+  }
+	(*dls)(slaveSocket, args);
+	dlclose(dlo);
+}
+
 void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
   std::string original_querystring;
   if (request.method.compare("GET") == 0) {
