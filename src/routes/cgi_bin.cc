@@ -21,6 +21,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
 
   int ret = fork();
   if (ret == 0) {
+    std::cout << "About to run " << program_name << std::endl;
     // Is child
     setenv("REQUEST_METHOD", request.method.c_str(), 1);
     setenv("QUERY_STRING", original_querystring.c_str(), 1);
@@ -35,7 +36,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
 
     char *argv[1];
     argv[0] = const_cast<char *>(program_name.c_str());
-    std::cout << "About to run " << program_name << std::endl;
+    
     execvp(argv[0], argv);
     std::cout << "Warning: something's wrong." << strerror(errno) << std::endl;
     _exit(1);
