@@ -21,7 +21,7 @@ void plustospace(char *str);
 
 
 
-main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
     entry entries[10000];
     register int x,m=0;
     char *cl;

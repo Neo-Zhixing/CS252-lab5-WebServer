@@ -14,7 +14,13 @@ RM= /bin/rm -f
 .c.o: 
 	$(CC) -c $(CFLAGS) $<
 
-all: query post-query imagemap jj phf
+all: query post-query jj jj-mod
+
+jj-mod.o:
+	$(CC) -c -fPIC $(CFLAGS) jj-mod.c
+
+util-mod.o:
+	$(CC) -c -fPIC $(CFLAGS) util.c -o util-mod.o
 
 att:
 	make all CC=gcc CFLAGS="-O2 -DNO_STDLIB_H"
@@ -67,18 +73,22 @@ post-query: post-query.o util.o
 query: query.o util.o
 	$(CC) query.o util.o -o ../cgi-bin/query
 
-imagemap: imagemap.o
-	$(CC) imagemap.o -o ../cgi-bin/imagemap
+#imagemap: imagemap.o
+#	$(CC) imagemap.o -o ../cgi-bin/imagemap
 
 jj: jj.o util.o
 	$(CC) jj.o util.o -o ../cgi-bin/jj
 
-phf: phf.o util.o
-	$(CC) phf.o util.o -o ../cgi-bin/phf
+
+jj-mod: jj-mod.o util-mod.o
+	$(CC) jj-mod.o util-mod.o -shared  -o ../cgi-bin/jj-mod.so
+
+#phf: phf.o util.o
+#	$(CC) phf.o util.o -o ../cgi-bin/phf
 
 change-passwd: change-passwd.o util.o
 	$(CC) change-passwd.o util.o -o ../sec-cgi/change-passwd
 
 clean:
-	rm -f *.o ../cgi-bin/post-query ../cgi-bin/query ../sec-cgi/change-passwd ../cgi-bin/phf ../cgi-bin/jj ../cgi-bin/imagemap
+	rm -f *.o ../cgi-bin/post-query ../cgi-bin/query ../sec-cgi/change-passwd ../cgi-bin/phf ../cgi-bin/jj ../cgi-bin/imagemap ../cgi-bin/jj-mod.so
 

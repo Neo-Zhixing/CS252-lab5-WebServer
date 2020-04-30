@@ -23,7 +23,7 @@ void unescape_url(char *url);
 void plustospace(char *str);
 
 
-main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
     entry entries[MAX_ENTRIES];
     register int x,m=0;
     int cl;
