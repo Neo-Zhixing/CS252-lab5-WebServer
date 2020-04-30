@@ -18,7 +18,7 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
     close(socketfd);
     std::cout << "HTTP/1.1 200 OK" << std::endl;
   
-    char *argv[];
+    char *argv[2];
     argv[0] = const_cast<char *>(program_name.c_str());
     argv[1] = NULL;
     execvp(argv[0], argv);
@@ -42,7 +42,8 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
   if (index != std::string::npos)
     program_name.erase(index);
   
-  if (program_name.ends_with(".so")) {
+  std::string ending = ".so";
+  if (0 == program_name.compare (fullString.length() - ending.length(), ending.length(), ending))) {
     // Load shared lib
   } else {
     // Run fork
