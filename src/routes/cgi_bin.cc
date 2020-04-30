@@ -36,7 +36,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     char *argv[3];
     argv[0] = const_cast<char *>(program_name.c_str());
     argv[1] = "aaa";
-    argv[2] = NULL;
+    argv[2] = "bbb";
     execvp(argv[0], argv);
     std::cout << "Warning: something's wrong." << strerror(errno) << std::endl;
     _exit(1);
