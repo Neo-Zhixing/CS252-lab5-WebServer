@@ -45,5 +45,6 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     _exit(1);
   } else {
     waitpid(ret, NULL, 0);
+    std::cout << "Parent thread finished" << std::endl;
   }
 }
