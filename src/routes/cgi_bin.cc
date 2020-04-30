@@ -33,10 +33,9 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     close(socketfd);
     std::cout << "HTTP/1.1 200 OK" << std::endl;
   
-    char *argv[3];
-    argv[0] = "Hello?";
-    argv[1] = "World.";
-    argv[2] = NULL;
+    char *argv[1];
+    argv[0] = const_cast<char *>(program_name.c_str());
+    
     execvp(argv[0], argv);
     std::cout << "Warning: something's wrong." << strerror(errno) << std::endl;
     _exit(1);
