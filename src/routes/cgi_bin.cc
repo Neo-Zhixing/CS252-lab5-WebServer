@@ -43,7 +43,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     program_name.erase(index);
   
   std::string ending = ".so";
-  if (0 == program_name.compare (fullString.length() - ending.length(), ending.length(), ending))) {
+  if (0 == program_name.compare (program_name.length() - ending.length(), ending.length(), ending))) {
     // Load shared lib
   } else {
     // Run fork
