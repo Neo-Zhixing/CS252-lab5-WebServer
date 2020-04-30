@@ -6,7 +6,7 @@
 #include <boost/algorithm/string.hpp>
 #include <sys/wait.h>
 
-void handle_cgi_bin_fork(std::string& program_name, int socketfd, const HttpRequest& request) {
+void handle_cgi_bin_fork(std::string& program_name, std::string& original_querystring, int socketfd, const HttpRequest& request) {
   int ret = fork();
   if (ret == 0) {
     std::cout << "About to run " << program_name << std::endl;
@@ -46,7 +46,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     // Load shared lib
   } else {
     // Run fork
-    handle_cgi_bin_fork(program_name, sock->get_socket(), request);
+    handle_cgi_bin_fork(program_name, original_querystring, sock->get_socket(), request);
   }
 
 
