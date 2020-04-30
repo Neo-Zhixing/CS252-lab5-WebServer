@@ -29,7 +29,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     setenv("REQUEST_METHOD", request.method.c_str(), 1);
     setenv("QUERY_STRING", original_querystring.c_str(), 1);
     int socketfd = sock->get_socket();
-    //dup2(socketfd, 1); // Redirect stdout to the pipe
+    dup2(socketfd, 1); // Redirect stdout to the pipe
     //close(socketfd);
     std::cout << "HTTP/1.1 200 OK" << std::endl;
   
