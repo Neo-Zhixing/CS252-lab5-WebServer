@@ -7,11 +7,6 @@
 #include <sys/wait.h>
 
 void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
-  HttpResponse response;
-  response.http_version = request.http_version;
-  response.status_code = 200;
-  sock->write(response.to_string());
-
   std::string original_querystring;
   if (request.method.compare("GET") == 0) {
     original_querystring = request.query;
@@ -36,6 +31,7 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
     int socketfd = sock->get_socket();
     //dup2(socketfd, 1); // Redirect stdout to the pipe
     //close(socketfd);
+    std::cout << "HTTP/1.1 200 OK" << std::endl;
   
     char *argv[1];
     argv[0] = const_cast<char *>(program_name.c_str());
