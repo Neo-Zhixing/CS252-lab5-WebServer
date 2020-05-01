@@ -106,8 +106,8 @@ void Server::handle(const Socket_t sock) const {
       break;
     }
   }
-  auto end_time = chrono::steady_clock::now();
-  auto duration = chrono::duration_cast<chrono::milliseconds>(end_time - start_time).count();
+  auto end_time = std::chrono::steady_clock::now();
+  auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
   if (duration < min_servetime) {
     min_servetime = duration;
   }
