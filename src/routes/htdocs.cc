@@ -67,7 +67,7 @@ void serve_dir(const fs::path& path, const Socket_t& sock) {
   for (auto const & elem : fs::directory_iterator(path)) {
     std::string newuri = elem.path();
     newuri.erase(0,21);
-    buf << "<li><a href=\"" << newuri << "\">" << elem.path() << "</a></li>" << std::endl;
+    buf << "<li><a href=\"" << newuri << "\">" << newuri << "</a></li>" << std::endl;
   }
 
   
