@@ -19,7 +19,7 @@ GCCFLAGS:=`pkg-config --cflags openssl` -g
 LDLIBS=`pkg-config --libs openssl -ldl`
 
 CFLAGS=$(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS) --std=gnu11
-CXXFLAGS=$(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS)  -lstdc++fs --std=gnu++17
+CXXFLAGS=$(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS) --std=gnu++17
 LDFLAGS=$(WARNFLAGS) -pthread
 
 LINTER=./cpplint.py
