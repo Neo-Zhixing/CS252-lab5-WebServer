@@ -51,14 +51,15 @@ void serve_file(const fs::path& path, const Socket_t& sock) {
 void serve_dir(const fs::path& path, const Socket_t& sock) {
   HttpResponse response;
   response.status_code = 200;
-  response.message_body = "Serve Dir Test";
-  sock->write(response.to_string());
-  sock->write("hello ");
+
+  std::stringstream buf;
 
   for (auto const & elem : fs::directory_iterator(path)) {
-    std::cout << elem << "Lalalala0" << std::endl;
-    sock->write(elem.path());
+    buf << elem << "Lalalala0" << std::endl;
   }
+
+  response.message_body = buf.str();
+  sock->write(response.to_string());
 }
 
 void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
