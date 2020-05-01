@@ -14,7 +14,7 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
   int socketfd = sock->get_socket();
   int readfd, writefd;
   if (socketfd == -1) {
-    int[] pipefd[2];
+    int pipefd[2];
     pipe(pipefd);
     readfd = pipefd[0];
     writefd = pipefd[1];
@@ -45,7 +45,7 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
     if (socketfd == -1) {
       close(writefd);
       while(true) {
-        int[] buf[512];
+        int buf[512];
         int ret = read(readfd, buf, 512);
         if (ret == -1) {
           std::cout << "Read error. " << std::endl;
