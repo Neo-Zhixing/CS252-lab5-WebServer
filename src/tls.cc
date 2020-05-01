@@ -57,11 +57,6 @@ void init_openssl()
     OpenSSL_add_ssl_algorithms();
 }
 
-void cleanup_openssl()
-{
-    EVP_cleanup();
-}
-
 SSL_CTX *create_context()
 {
     const SSL_METHOD *method;
@@ -105,10 +100,22 @@ void configure_context(SSL_CTX *ctx)
 
 TLSSocket::TLSSocket(int port_no, struct sockaddr_in addr, SSL* ssl) :
   _socket(port_no), _addr(addr), _ssl(ssl) {
-    // TODO: Task 2.1
+    char inet_pres[INET_ADDRSTRLEN];
+    // sin_family will be AF_INET
+    if (inet_ntop(addr.sin_family, &(addr.sin_addr), inet_pres, INET_ADDRSTRLEN)) {
+        std::cout << "Received a TLS connection from " << inet_pres << std::endl;
+    }
 }
 TLSSocket::~TLSSocket() noexcept {
-    // TODO: Task 2.1
+    std::cout << "Closing TCP socket fd " << _socket;
+    char inet_pres[INET_ADDRSTRLEN];
+    // sin_family will be AF_INET
+    if (inet_ntop(_addr.sin_family, &(_addr.sin_addr), inet_pres, INET_ADDRSTRLEN)) {
+        std::cout << " from " << inet_pres;
+    }
+    std::cout << std::endl;
+    close(_socket);
+    SSL_free(_ssl);
 }
 
 char TLSSocket::getc() {
@@ -146,7 +153,7 @@ void TLSSocket::write(char const *const buf, const size_t buf_len) {
 }
 
 int TLSSocket::get_socket() {
-    return 0;
+    return _socket;
 }
 
 TLSSocketAcceptor::TLSSocketAcceptor(const int portno) {
@@ -182,4 +189,6 @@ Socket_t TLSSocketAcceptor::accept_connection() const {
 TLSSocketAcceptor::~TLSSocketAcceptor() noexcept {
     std::cout << "Closing socket " << _master_socket << std::endl;
     close(_master_socket);
+    SSL_CTX_free(_ssl_ctx);
+    EVP_cleanup();
 }
