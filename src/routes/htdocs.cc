@@ -51,11 +51,23 @@ void serve_file(const fs::path& path, const Socket_t& sock) {
 void serve_dir(const fs::path& path, const Socket_t& sock) {
   HttpResponse response;
   response.status_code = 200;
+  response.headers["Content-Type"] = "text/html";
 
   std::stringstream buf;
 
+  buf << "
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Directory Iterator</title>
+  </head>
+  <body>
+    The content of the document......
+  </body>
+</html>";
+
   for (auto const & elem : fs::directory_iterator(path)) {
-    buf << elem << "Lalalala0" << std::endl;
+    buf << elem.path() << std::endl;
   }
 
   response.message_body = buf.str();
