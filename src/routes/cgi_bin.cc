@@ -39,7 +39,7 @@ void handle_loadable(std::string& program_name, std::string& original_querystrin
     std::cout << "Can't load " << absolute_path << " with error " << dlerror() << std::endl;
   }
 
-  std::cout << "Loaded " << program_name << std::endl;
+  std::cout << "Loaded " << absolute_path << std::endl;
   
 
   void (*dls)(int, const char *);
@@ -51,7 +51,6 @@ void handle_loadable(std::string& program_name, std::string& original_querystrin
   }
 	(*dls)(socketfd, original_querystring.c_str());
 	dlclose(dlo);
-  free(absolute_path);
 }
 
 void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
