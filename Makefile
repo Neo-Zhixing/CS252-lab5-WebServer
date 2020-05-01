@@ -13,13 +13,13 @@ SRCDIR=$(ROOT)/src
 INCDIR=$(ROOT)/include
 
 GCCFLAGS:=-Wall
-CPPFLAGS:=-iquote$(INCDIR)
+CPPFLAGS:=-iquote$(INCDIR) -lstdc++f
 GCCFLAGS:=`pkg-config --cflags openssl` -g
 
 LDLIBS=`pkg-config --libs openssl`
 
 CFLAGS=$(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS) --std=gnu11
-CXXFLAGS=$(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS)  --std=gnu++14 -lstdc++f
+CXXFLAGS=$(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS)  --std=gnu++14
 LDFLAGS=$(WARNFLAGS) -pthread
 
 LINTER=./cpplint.py
