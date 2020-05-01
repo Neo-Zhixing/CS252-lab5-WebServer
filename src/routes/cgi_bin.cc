@@ -12,7 +12,10 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
   int socketfd = sock->get_socket();
   int readfd, writefd;
   if (socketfd == -1) {
-    pipe(readfd, writefd);
+    int pipefd[2];
+    pipe(pipefd);
+    readfd = pipefd[0];
+    writefd = pipefd[1];
   }
 
   int ret = fork();
@@ -25,7 +28,7 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
     if (socketfd == -1) {
       // Redirect stdout to the pipe
       close(readfd);
-      dupe2(writefd, 1);
+      dup2(writefd, 1);
       close(writefd);
     } else {
       dup2(socketfd, 1); // Redirect stdout to the socket
