@@ -52,6 +52,8 @@ void handle_loadable(std::string& program_name, std::string& original_querystrin
     std::cout << "Can't find httprun. " << absolute_path << "   " << error << std::endl;
 		return;
   }
+
+  map[program_name] = dlo;
 	(*dls)(socketfd, original_querystring.c_str());
 	dlclose(dlo);
 }
