@@ -64,8 +64,6 @@ void serve_dir(const fs::path& path, const Socket_t& sock) {
   <body>
     <ul>";
 
-  fs::path basepath ("http-root-dir/htdocs");
-
   for (auto const & elem : fs::directory_iterator(path)) {
     std::string newuri = elem.path();
     newuri.erase(0,18);
