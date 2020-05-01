@@ -37,7 +37,7 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
     waitpid(ret, NULL, 0);
     std::cout << "Parent thread finished" << std::endl;
     if (socketfd == -1) {
-      std::cout << buffer << std::endl;
+      std::cout << buffer.str() << std::endl;
     }
   }
 }
