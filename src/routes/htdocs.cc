@@ -55,7 +55,7 @@ void serve_dir(const fs::path& path, const Socket_t& sock) {
   sock->write(response.to_string());
 
   for (auto const & elem : fs::directory_iterator(path)) {
-    sock->write(elem.to_string());
+    sock->write(elem.path);
   }
 }
 
