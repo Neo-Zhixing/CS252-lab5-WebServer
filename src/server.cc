@@ -124,7 +124,7 @@ bool Server::authenticate(const HttpRequest& req, const Socket_t& sock) const {
   return true;
 }
 
-void Server::get_request(const Socket_t& sock, const HttpRequest& req) const {
+void Server::get_request(const Socket_t& sock, HttpRequest& req) const {
   auto line = sock->readline();
   std::size_t pos;
   int state = 0;
