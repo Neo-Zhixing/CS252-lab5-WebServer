@@ -32,16 +32,14 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
   }
 }
 
+
+std::map<std::string, void*> dlmap;
 void handle_loadable(std::string& program_name, std::string& original_querystring, int socketfd, const HttpRequest& request) {
-  std::cout << "Starting to load module" << std::endl;
   size_t absolute_path_size = pathconf(".", _PC_PATH_MAX);
   char* absolute_path = (char*)malloc(absolute_path_size);
   absolute_path = getcwd(absolute_path, (size_t)absolute_path_size);
   strcat(absolute_path, "/");
   strcat(absolute_path, program_name.c_str());
-
-
-  std::cout << "Were" << absolute_path << " about to load" << std::endl;
   void *dlo = dlopen(absolute_path, RTLD_LAZY);
   if (!dlo) {
     std::cout << "Can't load " << absolute_path << " with error " << dlerror() << std::endl;
