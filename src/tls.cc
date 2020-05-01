@@ -158,7 +158,7 @@ void TLSSocket::write(char const *const buf, const size_t buf_len) {
 }
 
 int TLSSocket::get_socket() {
-    return _socket;
+    return -1;
 }
 
 TLSSocketAcceptor::TLSSocketAcceptor(const int portno) {
