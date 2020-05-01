@@ -11,6 +11,7 @@ void serve_file(const std::experimental::filesystem::path& path, const Socket_t&
   std::ifstream input(path, std::ios_base::in | std::ios_base::binary );
 
   if (!input) {
+    std::cout << "Going with filename " << path.filename() << std::endl;
     if (path.filename().compare("index.html") != 0) {
       std::experimental::filesystem::path newpath = path / std::experimental::filesystem::path("index.html");
       serve_file(newpath, sock);
