@@ -106,6 +106,18 @@ void handle_loadable(std::string& program_name, std::string& original_querystrin
 
   
 	(*dls)(socketfd, original_querystring.c_str());
+
+
+  if (buffered) {
+    lseek(socketfd, 0, SEEK_SET);
+    char buf[512];
+    int ret;
+    while ((ret = read(socketfd, buf, 512)) > 0) {
+      sock->write(buf, ret);
+    }
+    std::cout << "read pipe ended";
+    close(socketfd);
+  }
 }
 
 void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
