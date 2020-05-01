@@ -22,6 +22,7 @@ class TLSSocket : public Socket {
     std::string readline();
     void write(std::string const&);
     void write(char const * const buf, size_t len);
+    int get_socket();
 };
 
 class TLSSocketAcceptor : public SocketAcceptor {
