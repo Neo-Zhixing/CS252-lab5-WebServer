@@ -40,22 +40,30 @@ void handle_loadable(std::string& program_name, std::string& original_querystrin
   absolute_path = getcwd(absolute_path, (size_t)absolute_path_size);
   strcat(absolute_path, "/");
   strcat(absolute_path, program_name.c_str());
-  void *dlo = dlopen(absolute_path, RTLD_LAZY);
-  if (!dlo) {
-    std::cout << "Can't load " << absolute_path << " with error " << dlerror() << std::endl;
-  }
+  void *dlo;
 
+  if ((auto i = dlmap.find(program_name)) == dlmap.end()) {
+    // Lib does not exist
+    dlo = dlopen(absolute_path, RTLD_LAZY);
+    if (!dlo) {
+      std::cout << "Can't load " << absolute_path << " with error " << dlerror() << std::endl;
+    }
+
+    dlmap[program_name] = dlo;
+  } else {
+    dlo = *i;
+  }
+  
   void (*dls)(int, const char *);
-	*(void **)(&dls) = dlsym(dlo, "httprun");
-	char *error;
-	if ((error = dlerror()) != NULL)  {
+  *(void **)(&dls) = dlsym(dlo, "httprun");
+  char *error;
+  if ((error = dlerror()) != NULL)  {
     std::cout << "Can't find httprun. " << absolute_path << "   " << error << std::endl;
-		return;
+    return;
   }
 
-  dlmap[program_name] = dlo;
+  
 	(*dls)(socketfd, original_querystring.c_str());
-	dlclose(dlo);
 }
 
 void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
