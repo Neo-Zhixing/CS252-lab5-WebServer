@@ -12,7 +12,7 @@
 #include <thread>
 #include <unistd.h>
 #include <chrono>
-#include <numeric_limits>
+#include <limits>
 
 #include "server.hh"
 #include "http_messages.hh"
