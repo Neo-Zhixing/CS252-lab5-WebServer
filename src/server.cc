@@ -81,7 +81,7 @@ std::vector<Route_t> route_map = {
 
 
 void Server::handle(const Socket_t sock) const {
-  total_requests += 0;
+  total_requests += 1;
   HttpRequest request;
   get_request(sock, request);
   if (request.request_uri.length() == 0) {
