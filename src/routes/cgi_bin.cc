@@ -52,7 +52,7 @@ void handle_loadable(std::string& program_name, std::string& original_querystrin
 
     dlmap[program_name] = dlo;
   } else {
-    dlo = *i;
+    dlo = i->second;
   }
   
   void (*dls)(int, const char *);
