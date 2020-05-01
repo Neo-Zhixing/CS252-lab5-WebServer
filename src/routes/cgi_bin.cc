@@ -5,6 +5,7 @@
 #include <vector>
 #include <boost/algorithm/string.hpp>
 #include <sys/wait.h>
+#include <sys/mman.h>
 #include <dlfcn.h>
 #include <stdlib.h>
 
