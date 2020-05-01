@@ -42,6 +42,10 @@ void serve_file(const std::experimental::filesystem::path& path, const Socket_t&
 }
 
 void serve_dir(const std::experimental::filesystem::path& path, const Socket_t& sock) {
+  HttpResponse response;
+  response.status_code = 200;
+  response.message_body = "Serve Dir Test";
+  sock->write(response.to_string());
 }
 
 void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
