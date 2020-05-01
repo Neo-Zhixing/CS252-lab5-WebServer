@@ -165,7 +165,7 @@ Socket_t TLSSocketAcceptor::accept_connection() const {
     int client = accept(_master_socket, (struct sockaddr*)&addr, &len);
     if (client < 0) {
         std::cout << "Unable to accept" << std::endl;
-        return;
+        return NULL;
     }
 
     SSL* ssl = SSL_new(_ssl_ctx);
