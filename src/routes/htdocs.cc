@@ -7,17 +7,17 @@
 
 
 void serve_file(const std::experimental::filesystem::path& path, const Socket_t& sock) {
+  if (std::experimental::filesystem::is_directory(path)) {
+    std::experimental::filesystem::path newpath = path / std::experimental::filesystem::path("index.html");
+    serve_file(newpath, sock);
+    return;
+  }
   HttpResponse response;
   std::ifstream input(path, std::ios_base::in | std::ios_base::binary );
 
   if (!input) {
-    std::cout << "Going with filename " << path.filename() << std::endl;
-    if (path.filename().compare("index.html") != 0) {
-      std::experimental::filesystem::path newpath = path / std::experimental::filesystem::path("index.html");
-      serve_file(newpath, sock);
-      return;
-    }
     response.status_code = 404;
+    response.message_body = "Can't get at all";
     sock->write(response.to_string());
     return;
   }
