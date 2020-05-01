@@ -33,26 +33,40 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
 }
 
 
+std::map<std::string, void*> dlmap;
 void handle_loadable(std::string& program_name, std::string& original_querystring, int socketfd, const HttpRequest& request) {
   size_t absolute_path_size = pathconf(".", _PC_PATH_MAX);
   char* absolute_path = (char*)malloc(absolute_path_size);
   absolute_path = getcwd(absolute_path, (size_t)absolute_path_size);
   strcat(absolute_path, "/");
   strcat(absolute_path, program_name.c_str());
-  void *dlo = dlopen(absolute_path, RTLD_LAZY);
-  if (!dlo) {
-    std::cout << "Can't load " << absolute_path << " with error " << dlerror() << std::endl;
+  void *dlo;
+
+  auto i = dlmap.find(program_name);
+  if (i == dlmap.end()) {
+    std::cout << "Loading lib " << absolute_path << std::endl;
+    // Lib does not exist
+    dlo = dlopen(absolute_path, RTLD_LAZY);
+    if (!dlo) {
+      std::cout << "Can't load " << absolute_path << " with error " << dlerror() << std::endl;
+    }
+
+    dlmap[program_name] = dlo;
+  } else {
+    std::cout << "Reusing lib " << program_name << std::endl;
+    dlo = i->second;
+  }
+  
+  void (*dls)(int, const char *);
+  *(void **)(&dls) = dlsym(dlo, "httprun");
+  char *error;
+  if ((error = dlerror()) != NULL)  {
+    std::cout << "Can't find httprun. " << absolute_path << "   " << error << std::endl;
+    return;
   }
 
-  void (*dls)(int, const char *);
-	*(void **)(&dls) = dlsym(dlo, "httprun");
-	char *error;
-	if ((error = dlerror()) != NULL)  {
-    std::cout << "Can't find httprun. " << absolute_path << "   " << error << std::endl;
-		return;
-  }
+  
 	(*dls)(socketfd, original_querystring.c_str());
-	dlclose(dlo);
 }
 
 void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
