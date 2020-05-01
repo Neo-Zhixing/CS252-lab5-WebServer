@@ -6,6 +6,7 @@
 #include <boost/algorithm/string.hpp>
 #include <sys/wait.h>
 #include <dlfcn.h>
+#include <filesystem>
 
 void handle_cgi_bin_fork(std::string& program_name, std::string& original_querystring, int socketfd, const HttpRequest& request) {
   int ret = fork();
