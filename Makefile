@@ -13,7 +13,7 @@ SRCDIR=$(ROOT)/src
 INCDIR=$(ROOT)/include
 
 GCCFLAGS:=-Wall
-CPPFLAGS:=-iquote$(INCDIR) -lstdc++f
+CPPFLAGS:=-iquote$(INCDIR)
 GCCFLAGS:=`pkg-config --cflags openssl` -g
 
 LDLIBS=`pkg-config --libs openssl`
@@ -40,7 +40,7 @@ all: git-commit myhttpd
 
 myhttpd: $(call GETALLOBJ)
 	@echo -n "Linking $@ "
-	$(call test_output,$D$(CXX) $(LDFLAGS) $^ $(LDLIBS) -ldl -o $@,$(OK_STRING))
+	$(call test_output,$D$(CXX) $(LDFLAGS) $^ $(LDLIBS) -ldl -lstdc++fs -o $@,$(OK_STRING))
 
 git-commit:
 	git checkout master >> .local.git.out || echo
