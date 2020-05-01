@@ -1,6 +1,7 @@
 #include "http_messages.hh"
 #include "socket.hh"
 #include "server.hh"
+#include <format>
 
 // If you use the recommended route handling scheme, you will probably want a default handler
 
