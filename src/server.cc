@@ -68,6 +68,7 @@ void Server::run_thread_pool(const int num_threads) const {
 
 std::vector<Route_t> route_map = {
   std::make_pair("/cgi-bin", handle_cgi_bin),
+  std::make_pair("/stats", handle_stats),
   std::make_pair("/", handle_htdocs),
   std::make_pair("", handle_default)
 };

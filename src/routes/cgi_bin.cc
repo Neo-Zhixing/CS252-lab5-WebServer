@@ -115,7 +115,6 @@ void handle_loadable(std::string& program_name, std::string& original_querystrin
     while ((ret = read(socketfd, buf, 512)) > 0) {
       sock->write(buf, ret);
     }
-    std::cout << "read pipe ended";
     close(socketfd);
   }
 }
