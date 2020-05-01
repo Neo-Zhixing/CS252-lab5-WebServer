@@ -10,8 +10,12 @@
 
 void handle_cgi_bin_fork(std::string& program_name, std::string& original_querystring, const Socket_t& sock, const HttpRequest& request) {
   int socketfd = sock->get_socket();
+  int readfd, writefd;
+  if (socketfd == -1) {
+    pipe(readfd, writefd);
+  }
+
   int ret = fork();
-  std::stringstream buffer;
   if (ret == 0) {
     std::cout << "About to run " << program_name << std::endl;
 
@@ -19,9 +23,12 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
     setenv("REQUEST_METHOD", request.method.c_str(), 1);
     setenv("QUERY_STRING", original_querystring.c_str(), 1);
     if (socketfd == -1) {
-      std::cout.rdbuf( buffer.rdbuf() );
+      // Redirect stdout to the pipe
+      close(readfd);
+      dupe2(writefd, 1);
+      close(writefd);
     } else {
-      dup2(socketfd, 1); // Redirect stdout to the pipe
+      dup2(socketfd, 1); // Redirect stdout to the socket
       close(socketfd);
     }
 
@@ -34,11 +41,18 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
     std::cout << "Warning: something's wrong." << strerror(errno) << std::endl;
     _exit(1);
   } else {
+    if (socketfd == -1) {
+      close(writefd);
+      char buf[512];
+      int ret;
+      while ((ret = read(readfd, buf, 512)) > 0) {
+        std::cout << "obtained data" << ret << std::endl;
+      }
+      std::cout << "read pipe ended";
+      close(readfd);
+    }
     waitpid(ret, NULL, 0);
     std::cout << "Parent thread finished" << std::endl;
-    if (socketfd == -1) {
-      sock->write(buffer.str());
-    }
   }
 }
 
