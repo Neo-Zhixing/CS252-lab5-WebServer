@@ -8,16 +8,18 @@ void handle_stats(const HttpRequest& request, const Socket_t& sock) {
   HttpResponse response;
   response.http_version = request.http_version;
   response.status_code = 200;
-  response.message_body = "\
+  std::stringbuffer buf;
+  buf << "\
   <!DOCTYPE html>\
   <html>\
     <body>\
       <ul>\
         <li>Name: Zhixing Zhang</li>\
-        <li>Total requests served: " + std::string(total_requests)+ "</li>\
+        <li>Total requests served: " << total_requests << "</li>\
       </ul>\
     </body>\
   </html>";
+  response.message_body = buf.str();
   sock->write(response.to_string());
 }
 
