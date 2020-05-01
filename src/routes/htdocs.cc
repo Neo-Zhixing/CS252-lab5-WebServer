@@ -61,7 +61,7 @@ void serve_dir(const fs::path& path, const Socket_t& sock) {
   <head>\
     <title>My Directory Iterator</title>\
   </head>\
-  <body>
+  <body>\
     <ul>";
 
   for (auto const & elem : fs::directory_iterator(path)) {
