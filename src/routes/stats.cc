@@ -8,7 +8,7 @@ void handle_stats(const HttpRequest& request, const Socket_t& sock) {
   HttpResponse response;
   response.http_version = request.http_version;
   response.status_code = 200;
-  std::stringbuffer buf;
+  std::stringbuf buf;
   buf << "\
   <!DOCTYPE html>\
   <html>\
