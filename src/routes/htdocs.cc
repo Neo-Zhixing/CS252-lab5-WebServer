@@ -30,7 +30,7 @@ void serve_file(const std::experimental::filesystem::path& path, const Socket_t&
     input.read(buf, size);
     response.status_code = 200;
     response.headers["Content-Length"] = std::to_string(size);
-    response.headers["Content-Type"] = get_content_type(uri.relative_path);
+    response.headers["Content-Type"] = get_content_type(std::experimental::filesystem::absolute(path));
     sock->write(response.to_string());
     sock->write(buf, size);
     delete[] buf;
