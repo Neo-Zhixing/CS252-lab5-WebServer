@@ -42,7 +42,6 @@ void handle_loadable(std::string& program_name, std::string& original_querystrin
 
 
   std::cout << "Were" << absolute_path << " about to load" << std::endl;
-  return;
   void *dlo = dlopen(absolute_path, RTLD_LAZY);
   if (!dlo) {
     std::cout << "Can't load " << absolute_path << " with error " << dlerror() << std::endl;
