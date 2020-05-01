@@ -24,3 +24,7 @@ std::string Socket::readline() {
 
     return str;
 }
+
+int Socket::get_socket() {
+    return 0;
+}

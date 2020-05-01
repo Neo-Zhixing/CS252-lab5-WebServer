@@ -70,6 +70,10 @@ std::string TCPSocket::readline() {
     return str;
 }
 
+int TCPSocket::get_socket() {
+    return _socket;
+}
+
 void TCPSocket::write(std::string const& str) {
     write(str.c_str(), str.length());
 }

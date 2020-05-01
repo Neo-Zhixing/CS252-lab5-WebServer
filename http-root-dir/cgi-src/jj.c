@@ -136,7 +136,7 @@ void print_error(char *reason) {
     exit(1);
 }
 
-main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
     register int x,m=0;
     char *cl;
     char w[256];
