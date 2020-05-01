@@ -5,10 +5,11 @@
 #include <experimental/filesystem>
 // You may find implementing this function and using it in server.cc helpful
 
+namespace fs = std::experimental::filesystem;
 
-void serve_file(const std::experimental::filesystem::path& path, const Socket_t& sock) {
-  if (std::experimental::filesystem::is_directory(path)) {
-    std::experimental::filesystem::path newpath = path / std::experimental::filesystem::path("index.html");
+void serve_file(const fs::path& path, const Socket_t& sock) {
+  if (fs::is_directory(path)) {
+    fs::path newpath = path / fs::path("index.html");
     serve_file(newpath, sock);
     return;
   }
@@ -47,11 +48,15 @@ void serve_file(const std::experimental::filesystem::path& path, const Socket_t&
   }
 }
 
-void serve_dir(const std::experimental::filesystem::path& path, const Socket_t& sock) {
+void serve_dir(const fs::path& path, const Socket_t& sock) {
   HttpResponse response;
   response.status_code = 200;
   response.message_body = "Serve Dir Test";
   sock->write(response.to_string());
+
+  for (auto const & elem : fs::directory_iterator(path)) {
+    sock->write(elem);
+  }
 }
 
 void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
@@ -61,7 +66,7 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
     uri = uri.substr(0, querystr_pos);
   }
   uri = "http-root-dir/htdocs" + uri;
-  std::experimental::filesystem::path path(uri);
+  fs::path path(uri);
 
   if (uri.back() == '/') {
     serve_dir(path, sock);
