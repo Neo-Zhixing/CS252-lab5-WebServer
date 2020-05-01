@@ -161,7 +161,7 @@ TLSSocketAcceptor::TLSSocketAcceptor(const int portno) {
 Socket_t TLSSocketAcceptor::accept_connection() const {
     struct sockaddr_in addr;
 
-    int client = accept(_master_socket, (struct sockaddr*)&addr, sizeof(addr));
+    int client = accept(_master_socket, (struct sockaddr*)&addr, (uint)sizeof(addr));
     if (client < 0) {
         std::cout << "Unable to accept" << std::endl;
         return;
