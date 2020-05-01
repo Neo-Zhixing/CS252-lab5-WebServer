@@ -125,6 +125,7 @@ char TLSSocket::getc() {
         int error = ERR_get_error();
         if (error == 336027804) {
             std::cout << "Please use HTTPS" << std::endl;
+            return EOF;
         }else {
             throw ConnectionError("Unable to read a character: ");
         }
