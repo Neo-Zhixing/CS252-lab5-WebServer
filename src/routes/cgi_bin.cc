@@ -43,7 +43,7 @@ void handle_loadable(std::string& program_name, std::string& original_querystrin
     std::cout << "Can't find httprun. " << error << std::endl;
 		return;
   }
-	(*dls)(slaveSocket, args);
+	(*dls)(socketfd, original_querystring.c_str());
 	dlclose(dlo);
 }
 
