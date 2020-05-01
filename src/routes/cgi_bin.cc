@@ -42,7 +42,8 @@ void handle_loadable(std::string& program_name, std::string& original_querystrin
   strcat(absolute_path, program_name.c_str());
   void *dlo;
 
-  if ((auto i = dlmap.find(program_name)) == dlmap.end()) {
+  auto i = dlmap.find(program_name);
+  if (i == dlmap.end()) {
     // Lib does not exist
     dlo = dlopen(absolute_path, RTLD_LAZY);
     if (!dlo) {
