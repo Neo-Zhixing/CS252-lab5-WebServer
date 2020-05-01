@@ -120,7 +120,7 @@ TLSSocket::~TLSSocket() noexcept {
 
 char TLSSocket::getc() {
     char c;
-    ssize_t read = recv(_socket, &c, 1, 0);
+    ssize_t read = this->read(&c, 1);
     if (read < 0) {
         throw ConnectionError("Unable to read a character: " + std::string(strerror(errno)));
     } else if (read > 1) {
@@ -132,10 +132,7 @@ char TLSSocket::getc() {
 }
 
 ssize_t TLSSocket::read(char *buf, size_t buf_len) {
-    SSL_read(_ssl, buf, buf_len);
-    // TODO: Task 2.1
-    ssize_t r = 0;
-    return r;
+    return SSL_read(_ssl, buf, buf_len);
 }
 
 std::string TLSSocket::readline() {
