@@ -119,12 +119,20 @@ TLSSocket::~TLSSocket() noexcept {
 }
 
 char TLSSocket::getc() {
-    // TODO: Task 2.1
-    char c = '\0';
+    char c;
+    ssize_t read = recv(_socket, &c, 1, 0);
+    if (read < 0) {
+        throw ConnectionError("Unable to read a character: " + std::string(strerror(errno)));
+    } else if (read > 1) {
+        throw ConnectionError("Read more than one byte when expecting to only read one.");
+    } else if (read == 0) {
+        c = EOF;
+    }
     return c;
 }
 
 ssize_t TLSSocket::read(char *buf, size_t buf_len) {
+    SSL_read(_ssl, buf, buf_len);
     // TODO: Task 2.1
     ssize_t r = 0;
     return r;
@@ -143,13 +151,13 @@ std::string TLSSocket::readline() {
 }
 
 void TLSSocket::write(std::string const &str) {
-    write(str.c_str(), str.length());
+    SSL_write(_ssl, str.c_str(), str.length());
 }
 
 void TLSSocket::write(char const *const buf, const size_t buf_len) {
     if (buf == NULL)
         return;
-    // TODO: Task 2.1
+    SSL_write(_ssl, buf, buf_len);
 }
 
 int TLSSocket::get_socket() {
