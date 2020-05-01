@@ -76,7 +76,7 @@ jj: jj.o util.o
 jj-mod:
 	$(CC) -fPIC -c -o jj-mod.o jj-mod.c
 	$(CC) -fPIC -c -o util-mod.o util.c
-	ld -G -o ../cgi-bin/jj-mod.so jj-mod.o util-mod.o
+	$(CC) -shared -o ../cgi-bin/jj-mod.so jj-mod.o util-mod.o
 
 #phf: phf.o util.o
 #	$(CC) phf.o util.o -o ../cgi-bin/phf
