@@ -96,10 +96,10 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
   std::string ending = ".so";
   if (0 == program_name.compare (program_name.length() - ending.length(), ending.length(), ending)) {
     // Load shared lib
-    handle_loadable(program_name, original_querystring, sock->get_socket(), request);
+    handle_loadable(program_name, original_querystring, sock, request);
   } else {
     // Run fork
-    handle_cgi_bin_fork(program_name, original_querystring, sock->get_socket(), request);
+    handle_cgi_bin_fork(program_name, original_querystring, sock, request);
   }
 
 
