@@ -135,6 +135,7 @@ char TLSSocket::getc() {
 }
 
 ssize_t TLSSocket::read(char *buf, size_t buf_len) {
+    ERR_clear_error();
     return SSL_read(_ssl, buf, buf_len);
 }
 
