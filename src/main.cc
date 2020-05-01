@@ -34,6 +34,7 @@ extern "C" void killzombie(int signal) {
 }
 
 int main(int argc, char** argv) {
+    /*
     struct rlimit mem_limit = { .rlim_cur = 40960000, .rlim_max = 91280000 };
     struct rlimit cpu_limit = { .rlim_cur = 300, .rlim_max = 600 };
     struct rlimit nproc_limit = { .rlim_cur = 50, .rlim_max = 100 };
@@ -46,6 +47,7 @@ int main(int argc, char** argv) {
     if (setrlimit(RLIMIT_NPROC, &nproc_limit)) {
         perror("Couldn't set NPROC limit\n");
     }
+    */
 
     struct sigaction skillzombie;
 	skillzombie.sa_handler = killzombie;
