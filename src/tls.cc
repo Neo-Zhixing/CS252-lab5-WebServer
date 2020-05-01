@@ -122,7 +122,7 @@ char TLSSocket::getc() {
     char c;
     ssize_t read = this->read(&c, 1);
     if (read < 0) {
-        throw ConnectionError("Unable to read a character: " + std::string(SSL_get_error(_ssl, read)));
+        throw ConnectionError("Unable to read a character: " + std::string(SSL_state_string(ssl_connection)));
     } else if (read > 1) {
         throw ConnectionError("Read more than one byte when expecting to only read one.");
     } else if (read == 0) {
