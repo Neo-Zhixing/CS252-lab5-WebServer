@@ -3,10 +3,12 @@
 
 #include "socket.hh"
 #include "http_messages.hh"
+#include <chrono>
 
 extern unsigned int total_requests;
 extern unsigned int min_servetime;
 extern unsigned int max_servetime;
+extern std::chrono::time_point<std::chrono::steady_clock> startup_time;
 
 class Server {
  private:

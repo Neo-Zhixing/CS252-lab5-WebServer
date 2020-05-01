@@ -20,7 +20,7 @@
 #include "misc.hh"
 #include "routes.hh"
 
-auto startup_time = std::chrono::steady_clock::now();
+std::chrono::time_point<std::chrono::steady_clock> startup_time = std::chrono::steady_clock::now();
 unsigned int total_requests = 0;
 unsigned int min_servetime = std::numeric_limits<unsigned int>::max();
 unsigned int max_servetime = 0;
