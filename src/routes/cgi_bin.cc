@@ -9,16 +9,9 @@
 #include <stdlib.h>
 
 void handle_cgi_bin_fork(std::string& program_name, std::string& original_querystring, const Socket_t& sock, const HttpRequest& request) {
-  int ret = fork();
-
   int socketfd = sock->get_socket();
-  int readfd, writefd;
-  if (socketfd == -1) {
-    int pipefd[2];
-    pipe(pipefd);
-    readfd = pipefd[0];
-    writefd = pipefd[1];
-  }
+  int ret = fork();
+  std::stringstream buffer;
   if (ret == 0) {
     std::cout << "About to run " << program_name << std::endl;
 
@@ -26,13 +19,12 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
     setenv("REQUEST_METHOD", request.method.c_str(), 1);
     setenv("QUERY_STRING", original_querystring.c_str(), 1);
     if (socketfd == -1) {
-      dup2(writefd, 1); // Redirect stdout to the pipe
-      close(writefd);
-      close(readfd);
+      std::cout.rdbuf( buffer.rdbuf() );
     } else {
-      dup2(socketfd, 1); // Redirect stdout to the socket
+      dup2(socketfd, 1); // Redirect stdout to the pipe
       close(socketfd);
     }
+
     std::cout << "HTTP/1.1 200 OK" << std::endl;
   
     char *argv[2];
@@ -42,26 +34,11 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
     std::cout << "Warning: something's wrong." << strerror(errno) << std::endl;
     _exit(1);
   } else {
-    if (socketfd == -1) {
-      std::cout << "Trying to read from pipe" << std::endl;
-      close(writefd);
-      while(true) {
-        int buf[512];
-        int ret = read(readfd, buf, 512);
-        if (ret == -1) {
-          std::cout << "Read error. " << std::endl;
-          break;
-        } else if(ret == 0) {
-          // no more data to read
-          break;
-        } else {
-          std::cout << "Just got some data: " << buf << std::endl;
-        }
-      }
-      close(readfd);
-    }
     waitpid(ret, NULL, 0);
     std::cout << "Parent thread finished" << std::endl;
+    if (socketfd == -1) {
+      std::cout << buffer << std::endl;
+    }
   }
 }
 
@@ -119,10 +96,10 @@ void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
   std::string ending = ".so";
   if (0 == program_name.compare (program_name.length() - ending.length(), ending.length(), ending)) {
     // Load shared lib
-    handle_loadable(program_name, original_querystring, sock, request);
+    handle_loadable(program_name, original_querystring, sock->get_socket(), request);
   } else {
     // Run fork
-    handle_cgi_bin_fork(program_name, original_querystring, sock, request);
+    handle_cgi_bin_fork(program_name, original_querystring, sock->get_socket(), request);
   }
 
 
