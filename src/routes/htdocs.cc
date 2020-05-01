@@ -41,17 +41,21 @@ void serve_file(const std::experimental::filesystem::path& path, const Socket_t&
   }
 }
 
+void serve_dir(const std::experimental::filesystem::path& path, const Socket_t& sock) {
+}
+
 void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
   auto querystr_pos = request.request_uri.find('?');
   std::string uri = request.request_uri;
   if (querystr_pos != std::string::npos) {
     uri = uri.substr(0, querystr_pos);
   }
-  if (uri.back() == '/') {
-    uri = uri + "index.html";
-  }
   uri = "http-root-dir/htdocs" + uri;
   std::experimental::filesystem::path path(uri);
-  serve_file(path, sock);
-  
+
+  if (uri.back() == '/') {
+    serve_dir(path, sock);
+  } else {
+    serve_file(path, sock);
+  }
 }
