@@ -67,7 +67,7 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
 
 std::map<std::string, void*> dlmap;
 void handle_loadable(std::string& program_name, std::string& original_querystring, const Socket_t& sock, const HttpRequest& request) {
-  dprintf(socketfd, "HTTP/1.1 200 OK");
+  dprintf(socket->get_socket(), "HTTP/1.1 200 OK");
   size_t absolute_path_size = pathconf(".", _PC_PATH_MAX);
   char* absolute_path = (char*)malloc(absolute_path_size);
   absolute_path = getcwd(absolute_path, (size_t)absolute_path_size);
