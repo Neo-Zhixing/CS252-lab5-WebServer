@@ -53,6 +53,7 @@ void serve_dir(const fs::path& path, const Socket_t& sock) {
   response.status_code = 200;
   response.message_body = "Serve Dir Test";
   sock->write(response.to_string());
+  sock->write("hello ");
 
   for (auto const & elem : fs::directory_iterator(path)) {
     std::cout << elem << "Lalalala0" << std::endl;
