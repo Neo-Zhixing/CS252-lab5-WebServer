@@ -19,7 +19,7 @@ GCCFLAGS:=`pkg-config --cflags openssl` -g
 LDLIBS=`pkg-config --libs openssl`
 
 CFLAGS=$(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS) --std=gnu11
-CXXFLAGS=$(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS) --std=gnu++17 -lstdc++fs
+CXXFLAGS=$(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS) --std=gnu++17
 LDFLAGS=$(WARNFLAGS) -pthread
 
 LINTER=./cpplint.py
@@ -40,7 +40,7 @@ all: git-commit myhttpd
 
 myhttpd: $(call GETALLOBJ)
 	@echo -n "Linking $@ "
-	$(call test_output,$D$(CXX) $(LDFLAGS) $^ $(LDLIBS) -ldl -lrt -o $@,$(OK_STRING))
+	$(call test_output,$D$(CXX) $(LDFLAGS) $^ $(LDLIBS) -ldl -lrt -lstdc++fs -o $@,$(OK_STRING))
 
 git-commit:
 	git checkout master >> .local.git.out || echo
