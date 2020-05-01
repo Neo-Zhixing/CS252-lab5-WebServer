@@ -43,6 +43,7 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
     _exit(1);
   } else {
     if (socketfd == -1) {
+      std::cout << "Trying to read from pipe" << std::endl;
       close(writefd);
       while(true) {
         int buf[512];

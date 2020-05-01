@@ -134,7 +134,6 @@ char TLSSocket::getc() {
     } else if (read == 0) {
         c = EOF;
     }
-    std::cout << "Read character " << c << std::endl;
     return c;
 }
 
