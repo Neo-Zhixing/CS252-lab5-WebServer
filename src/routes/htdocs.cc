@@ -55,15 +55,15 @@ void serve_dir(const fs::path& path, const Socket_t& sock) {
 
   std::stringstream buf;
 
-  buf << "
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>My Directory Iterator</title>
-  </head>
-  <body>
-    The content of the document......
-  </body>
+  buf << "\
+<!DOCTYPE html>\
+<html>\
+  <head>\
+    <title>My Directory Iterator</title>\
+  </head>\
+  <body>\
+    The content of the document......\
+  </body>\
 </html>";
 
   for (auto const & elem : fs::directory_iterator(path)) {
