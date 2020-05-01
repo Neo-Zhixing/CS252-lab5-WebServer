@@ -39,7 +39,7 @@ void handle_loadable(std::string& program_name, std::string& original_querystrin
     std::cout << "Can't load " << absolute_path << " with error " << dlerror() << std::endl;
   }
 
-  std::cout << "Loaded " << absolute_path << std::endl;
+  std::cout << "Loaded " << absolute_path[0] << absolute_path[1] << absolute_path[2] << std::endl;
   
 
   void (*dls)(int, const char *);
