@@ -10,7 +10,9 @@
 #include <vector>
 #include <tuple>
 #include <thread>
-#include <unistd.h> 
+#include <unistd.h>
+#include <chrono>
+#include <numeric_limits>
 
 #include "server.hh"
 #include "http_messages.hh"
@@ -19,7 +21,7 @@
 #include "routes.hh"
 
 unsigned int total_requests = 0;
-unsigned int min_servetime = 0;
+unsigned int min_servetime = std::numeric_limits<unsigned int>::max();
 unsigned int max_servetime = 0;
 
 
@@ -81,6 +83,7 @@ std::vector<Route_t> route_map = {
 
 
 void Server::handle(const Socket_t sock) const {
+  auto start_time = chrono::steady_clock::now();
   total_requests += 1;
   HttpRequest request;
   get_request(sock, request);
@@ -102,6 +105,14 @@ void Server::handle(const Socket_t sock) const {
       pair.second(request, sock);
       break;
     }
+  }
+  auto end_time = chrono::steady_clock::now();
+  auto duration = chrono::duration_cast<chrono::milliseconds>(end_time - start_time).count();
+  if (duration < min_servetime) {
+    min_servetime = duration;
+  }
+  if (duration > max_servetime) {
+    max_servetime = duration;
   }
 }
 
