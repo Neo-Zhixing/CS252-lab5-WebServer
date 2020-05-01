@@ -63,8 +63,10 @@ void serve_dir(const fs::path& path, const Socket_t& sock) {
   </head>\
   <body>";
 
+  fs::path basepath ("http-root-dir/htdocs");
+
   for (auto const & elem : fs::directory_iterator(path)) {
-    buf << "<a href=\"aaa\">" << elem.path() << "<\a>" << std::endl;
+    buf << "<a href=\"" << fs::relative(elem, basepath)<< "\">" << elem.path() << "<\\a>" << std::endl;
   }
 
   
