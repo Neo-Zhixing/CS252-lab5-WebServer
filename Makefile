@@ -16,7 +16,7 @@ GCCFLAGS:=-Wall
 CPPFLAGS:=-iquote$(INCDIR)
 GCCFLAGS:=`pkg-config --cflags openssl` -g
 
-LDLIBS=`pkg-config --libs openssl -ldl`
+LDLIBS=`pkg-config -ldl --libs openssl`
 
 CFLAGS=$(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS) --std=gnu11
 CXXFLAGS=$(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS)  --std=gnu++14
