@@ -44,6 +44,7 @@ void handle_loadable(std::string& program_name, std::string& original_querystrin
 
   auto i = dlmap.find(program_name);
   if (i == dlmap.end()) {
+    std::cout << "Loading lib " << absolute_path << std::endl;
     // Lib does not exist
     dlo = dlopen(absolute_path, RTLD_LAZY);
     if (!dlo) {
@@ -52,6 +53,7 @@ void handle_loadable(std::string& program_name, std::string& original_querystrin
 
     dlmap[program_name] = dlo;
   } else {
+    std::cout << "Reusing lib " << program_name << std::endl;
     dlo = i->second;
   }
   
