@@ -40,17 +40,18 @@ void handle_loadable(std::string& program_name, std::string& original_querystrin
   }
 
   std::cout << "Loaded " << program_name << std::endl;
-  free(absolute_path);
+  
 
   void (*dls)(int, const char *);
 	*(void **)(&dls) = dlsym(dlo, "httprun");
 	char *error;
 	if ((error = dlerror()) != NULL)  {
-    std::cout << "Can't find httprun. " << error << std::endl;
+    std::cout << "Can't find httprun. " << absolute_path << "   " << error << std::endl;
 		return;
   }
 	(*dls)(socketfd, original_querystring.c_str());
 	dlclose(dlo);
+  free(absolute_path);
 }
 
 void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock) {
