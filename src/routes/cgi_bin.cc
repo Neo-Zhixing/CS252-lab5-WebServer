@@ -1,5 +1,3 @@
-#include "http_messages.hh"
-#include "socket.hh"
 #include <iostream>
 #include <map>
 #include <vector>
@@ -10,6 +8,9 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+
+#include "http_messages.hh"
+#include "socket.hh"
 
 void handle_cgi_bin_fork(std::string& program_name, std::string& original_querystring, const Socket_t& sock, const HttpRequest& request) {
   int socketfd = sock->get_socket();

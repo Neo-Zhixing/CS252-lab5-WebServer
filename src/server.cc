@@ -1,9 +1,3 @@
-/**
- * This file contains the primary logic for your server. It is responsible for
- * handling socket communication - parsing HTTP requests and sending HTTP responses
- * to the client. 
- */
-
 #include <functional>
 #include <iostream>
 #include <sstream>
@@ -130,7 +124,7 @@ bool Server::authenticate(const HttpRequest& req, const Socket_t& sock) const {
   return true;
 }
 
-void Server::get_request(const Socket_t& sock, HttpRequest& req) const {
+void Server::get_request(const Socket_t& sock, const HttpRequest& req) const {
   auto line = sock->readline();
   std::size_t pos;
   int state = 0;

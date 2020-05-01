@@ -1,9 +1,12 @@
 #ifndef  INCLUDE_SERVER_HH_
 #define INCLUDE_SERVER_HH_
 
+#include <chrono>
+#include <string>
+
 #include "socket.hh"
 #include "http_messages.hh"
-#include <chrono>
+
 
 extern unsigned int total_requests;
 extern unsigned int min_servetime;
@@ -29,7 +32,7 @@ class Server {
 
     bool authenticate(const HttpRequest& req, const Socket_t& sock) const;
 
-    void get_request(const Socket_t& sock, HttpRequest& req) const;
+    void get_request(const Socket_t& sock, const HttpRequest& req) const;
 };
 
 #endif  // INCLUDE_SERVER_HH_
