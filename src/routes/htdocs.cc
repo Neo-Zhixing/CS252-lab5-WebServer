@@ -6,25 +6,9 @@
 // You may find implementing this function and using it in server.cc helpful
 
 
-
-
-void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
+void serve_file(const std::fs::path& path, const Socket_t& sock) {
   HttpResponse response;
-  response.http_version = request.http_version;
-  // TODO: Task 1.3
-  // Get the request URI, verify the file exists and serve it
-
-  auto querystr_pos = request.request_uri.find('?');
-  std::string uri = request.request_uri;
-  if (querystr_pos != std::string::npos) {
-    uri = uri.substr(0, querystr_pos);
-  }
-  if (uri.back() == '/') {
-    uri = uri + "index.html";
-  }
-  uri = "http-root-dir/htdocs" + uri;
-
-  std::ifstream input(uri, std::ios_base::in | std::ios_base::binary );
+  std::ifstream input(path, std::ios_base::in | std::ios_base::binary );
 
   if (!input) {
     response.status_code = 404;
@@ -55,5 +39,19 @@ void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
 
     sock->write(response.to_string());
   }
+}
+
+void handle_htdocs(const HttpRequest& request, const Socket_t& sock) {
+  auto querystr_pos = request.request_uri.find('?');
+  std::string uri = request.request_uri;
+  if (querystr_pos != std::string::npos) {
+    uri = uri.substr(0, querystr_pos);
+  }
+  if (uri.back() == '/') {
+    uri = uri + "index.html";
+  }
+  uri = "http-root-dir/htdocs" + uri;
+  std::fs::path path(uri);
+  serve_file(path, sock);
   
 }
