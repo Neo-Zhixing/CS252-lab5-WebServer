@@ -16,12 +16,6 @@ RM= /bin/rm -f
 
 all: query post-query jj jj-mod
 
-jj-mod.o:
-	$(CC) -c -fPIC $(CFLAGS) jj-mod.c
-
-util-mod.o:
-	$(CC) -c -fPIC $(CFLAGS) util.c -o util-mod.o
-
 att:
 	make all CC=gcc CFLAGS="-O2 -DNO_STDLIB_H"
 
@@ -79,9 +73,10 @@ query: query.o util.o
 jj: jj.o util.o
 	$(CC) jj.o util.o -o ../cgi-bin/jj
 
-
-jj-mod: jj-mod.o util-mod.o
-	$(CC) jj-mod.o util-mod.o -shared  -o ../cgi-bin/jj-mod.so
+jj-mod:
+	$(CC) -fPIC -c -o jj-mod.o jj-mod.c
+	$(CC) -fPIC -c -o util-mod.o util.c
+	ld -G -o ../cgi-bin/jj-mod.so jj-mod.o util-mod.o
 
 #phf: phf.o util.o
 #	$(CC) phf.o util.o -o ../cgi-bin/phf
