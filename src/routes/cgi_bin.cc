@@ -31,7 +31,7 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
 }
 
 void handle_loadable(std::string& program_name, std::string& original_querystring, int socketfd, const HttpRequest& request) {
-  void *dlo = dlopen(docpath, RTLD_LAZY);
+  void *dlo = dlopen(program_name.c_str(), RTLD_LAZY);
   if (!dlo) {
     std::cout << "Can't load " << program_name << " with error " << dlerror() << std::endl;
   }
