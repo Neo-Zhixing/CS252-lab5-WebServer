@@ -53,7 +53,7 @@ void handle_loadable(std::string& program_name, std::string& original_querystrin
 		return;
   }
 
-  map[program_name] = dlo;
+  dlmap[program_name] = dlo;
 	(*dls)(socketfd, original_querystring.c_str());
 	dlclose(dlo);
 }
