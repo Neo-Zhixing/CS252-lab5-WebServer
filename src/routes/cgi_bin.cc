@@ -37,7 +37,7 @@ void handle_loadable(std::string& program_name, std::string& original_querystrin
     std::cout << "Can't load " << program_name << " with error " << dlerror() << std::endl;
   }
 
-  void (*dls)(int, char *);
+  void (*dls)(int, const char *);
 	*(void **)(&dls) = dlsym(dlo, "httprun");
 	char *error;
 	if ((error = dlerror()) != NULL)  {
