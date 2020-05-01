@@ -16,7 +16,7 @@ GCCFLAGS:=-Wall
 CPPFLAGS:=-iquote$(INCDIR)
 GCCFLAGS:=`pkg-config --cflags openssl` -g
 
-LDLIBS=`pkg-config --libs openssl`
+LDLIBS=`pkg-config --libs openssl -ldl`
 
 CFLAGS=$(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS) --std=gnu11
 CXXFLAGS=$(CPPFLAGS) $(WARNFLAGS) $(GCCFLAGS)  --std=gnu++14 -lstdc++fs
@@ -40,7 +40,7 @@ all: git-commit myhttpd
 
 myhttpd: $(call GETALLOBJ)
 	@echo -n "Linking $@ "
-	$(call test_output,$D$(CXX) $(LDFLAGS) $^ $(LDLIBS) -ldl -o $@,$(OK_STRING))
+	$(call test_output,$D$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@,$(OK_STRING))
 
 git-commit:
 	git checkout master >> .local.git.out || echo
