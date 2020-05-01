@@ -35,7 +35,7 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
 void handle_loadable(std::string& program_name, std::string& original_querystring, int socketfd, const HttpRequest& request) {
   std::cout << "Starting to load module" << std::endl;
   auto absolute_path = realpath(program_name.c_str(), NULL);
-  std::cout << absolute_path << " about to load" << std::endl;
+  std::cout << "Were" << absolute_path << " about to load" << std::endl;
   return;
   void *dlo = dlopen(absolute_path, RTLD_LAZY);
   if (!dlo) {
