@@ -33,11 +33,12 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
 
 void handle_loadable(std::string& program_name, std::string& original_querystring, int socketfd, const HttpRequest& request) {
   std::cout << "Starting to load module" << std::endl;
-  auto absolute_path = realpath(program_name.c_str());
+  auto absolute_path = realpath(program_name.c_str(), NULL);
   void *dlo = dlopen(absolute_path, RTLD_LAZY);
   if (!dlo) {
     std::cout << "Can't load " << absolute_path << " with error " << dlerror() << std::endl;
   }
+  free(absolute_path);
 
   void (*dls)(int, const char *);
 	*(void **)(&dls) = dlsym(dlo, "httprun");
