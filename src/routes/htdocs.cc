@@ -61,14 +61,16 @@ void serve_dir(const fs::path& path, const Socket_t& sock) {
   <head>\
     <title>My Directory Iterator</title>\
   </head>\
-  <body>\
-    The content of the document......\
-  </body>\
-</html>";
+  <body>"
 
   for (auto const & elem : fs::directory_iterator(path)) {
-    buf << elem.path() << std::endl;
+    buf << "<a href=\"aaa\">" <<elem.path() << "<\a>" << std::endl;
   }
+
+  
+buf << "\
+  </body>\
+</html>";
 
   response.message_body = buf.str();
   sock->write(response.to_string());
