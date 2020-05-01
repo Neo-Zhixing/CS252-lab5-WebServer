@@ -35,7 +35,7 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
 void handle_loadable(std::string& program_name, std::string& original_querystring, int socketfd, const HttpRequest& request) {
   std::cout << "Starting to load module" << std::endl;
   size_t absolute_path_size = pathconf(".", _PC_PATH_MAX);
-  char* absolute_path = malloc(absolute_path_size);
+  char* absolute_path = (char*)malloc(absolute_path_size);
   absolute_path = getcwd(absolute_path, (size_t)absolute_path_size);
   
 
