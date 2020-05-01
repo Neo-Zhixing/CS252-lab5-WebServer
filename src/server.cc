@@ -18,6 +18,11 @@
 #include "misc.hh"
 #include "routes.hh"
 
+unsigned int total_requests = 0;
+unsigned int min_servetime = 0;
+unsigned int max_servetime = 0;
+
+
 Server::Server(SocketAcceptor const& acceptor) : _acceptor(acceptor) { }
 
 void Server::run_linear() const {
@@ -76,6 +81,7 @@ std::vector<Route_t> route_map = {
 
 
 void Server::handle(const Socket_t sock) const {
+  total_requests += 0;
   HttpRequest request;
   get_request(sock, request);
   if (request.request_uri.length() == 0) {

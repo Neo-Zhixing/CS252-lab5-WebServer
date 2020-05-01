@@ -4,6 +4,10 @@
 #include "socket.hh"
 #include "http_messages.hh"
 
+extern unsigned int total_requests;
+extern unsigned int min_servetime;
+extern unsigned int max_servetime;
+
 class Server {
  private:
     SocketAcceptor const& _acceptor;
