@@ -49,7 +49,7 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
       char buf[512];
       int ret;
       while ((ret = read(readfd, buf, 512)) > 0) {
-        std::cout << "obtained data" << ret << std::endl;
+        sock->write(buf, ret);
       }
       std::cout << "read pipe ended";
       close(readfd);
