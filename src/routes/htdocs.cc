@@ -61,18 +61,20 @@ void serve_dir(const fs::path& path, const Socket_t& sock) {
   <head>\
     <title>My Directory Iterator</title>\
   </head>\
-  <body>";
+  <body>
+    <ul>";
 
   fs::path basepath ("http-root-dir/htdocs");
 
   for (auto const & elem : fs::directory_iterator(path)) {
     std::string newuri = elem.path();
-    newuri.erase(0,10);
-    buf << "<a href=\"" << newuri << "\">" << elem.path() << "<\\a>" << std::endl;
+    newuri.erase(0,18);
+    buf << "<li><a href=\"" << newuri << "\">" << elem.path() << "</a></li>" << std::endl;
   }
 
   
 buf << "\
+    </ul>
   </body>\
 </html>";
 
