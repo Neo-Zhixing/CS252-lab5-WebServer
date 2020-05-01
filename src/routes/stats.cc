@@ -15,6 +15,8 @@ void handle_stats(const HttpRequest& request, const Socket_t& sock) {
       <ul>\
         <li>Name: Zhixing Zhang</li>\
         <li>Total requests served: " << total_requests << "</li>\
+        <li>Max request time (ms): " << max_servetime << "</li>\
+        <li>Min request time (ms): " << min_servetime << "</li>\
       </ul>\
     </body>\
   </html>";
