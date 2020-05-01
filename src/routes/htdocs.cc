@@ -74,7 +74,7 @@ void serve_dir(const fs::path& path, const Socket_t& sock) {
 
   
 buf << "\
-    </ul>
+    </ul>\
   </body>\
 </html>";
 
