@@ -15,8 +15,8 @@ void handle_stats(const HttpRequest& request, const Socket_t& sock) {
       <ul>\
         <li>Name: Zhixing Zhang</li>\
         <li>Total requests served: {}</li>\
-      </ul>
-    </body>
+      </ul>\
+    </body>\
   </html>", total_requests);
   sock->write(response.to_string());
 }
