@@ -1,4 +1,4 @@
-#include <cgi_bin.h>
+#include "cgi_bin.h"
 
 #include <sys/stat.h>
 #include <sys/wait.h>
