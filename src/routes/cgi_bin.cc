@@ -99,7 +99,7 @@ void handle_loadable(
   if (i == dlmap.end()) {
     std::cout << "Loading lib " << absolute_path << std::endl;
     // Lib does not exist
-    dlo = dlopen(absolute_path, RTLD_LAZY);
+    dlo = dlopen(absolute_path.c_str(), RTLD_LAZY);
     if (!dlo) {
       std::cout << "Can't load " << absolute_path << " with error " << dlerror() << std::endl;
     }
