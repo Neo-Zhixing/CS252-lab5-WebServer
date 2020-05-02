@@ -1,8 +1,17 @@
 #ifndef  INCLUDE_SERVER_HH_
 #define INCLUDE_SERVER_HH_
 
+#include <chrono>
+#include <string>
+
 #include "socket.hh"
 #include "http_messages.hh"
+
+
+extern unsigned int total_requests;
+extern unsigned int min_servetime;
+extern unsigned int max_servetime;
+extern std::chrono::time_point<std::chrono::steady_clock> startup_time;
 
 class Server {
  private:

@@ -69,10 +69,10 @@ std::string get_content_type(const std::string& filename) {
 
         int status;
         waitpid(pid, &status, 0);
-        //if (waitpid(pid, &status, 0) == -1) {
+        //  if (waitpid(pid, &status, 0) == -1) {
         //    perror("get_content_type waitpid error");
         //    exit(-1);
-        //}
+        //  }
         if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
             std::cerr << "get_content_type returned nonzero status for " << filename << std::endl;
             response.clear();

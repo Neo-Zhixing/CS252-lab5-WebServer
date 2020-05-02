@@ -12,6 +12,7 @@
 void handle_cgi_bin(const HttpRequest& request, const Socket_t& sock);
 void handle_htdocs(const HttpRequest& request, const Socket_t& sock);
 void handle_default(const HttpRequest& request, const Socket_t& sock);
+void handle_stats(const HttpRequest& request, const Socket_t& sock);
 
 typedef std::function<void(const HttpRequest&, const Socket_t&)> Route_Handler_t;
 
