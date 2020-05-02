@@ -109,9 +109,9 @@ void handle_loadable(
     std::cout << "Reusing lib " << program_name << std::endl;
     dlo = i->second;
   }
-  
+
   void (*dls)(int, const char *);
-  *(void **)(&dls) = dlsym(dlo, "httprun");
+  *reinterpret_cast<void **>(&dls) = dlsym(dlo, "httprun");
   char *error;
   if ((error = dlerror()) != NULL)  {
     std::cout << "Can't find httprun. " << absolute_path << "   " << error << std::endl;
