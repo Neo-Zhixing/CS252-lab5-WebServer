@@ -1,5 +1,3 @@
-#include "cgi_bin.h"
-
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <sys/mman.h>
