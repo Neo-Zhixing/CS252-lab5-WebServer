@@ -8,6 +8,8 @@
 
 #include <boost/algorithm/string.hpp>
 
+#include <experimental/filesystem>
+
 #include <iostream>
 #include <map>
 #include <vector>
@@ -15,6 +17,8 @@
 
 #include "http_messages.hh"
 #include "socket.hh"
+
+namespace fs = std::experimental::filesystem;
 
 void handle_cgi_bin_fork(
   const std::string& program_name,
