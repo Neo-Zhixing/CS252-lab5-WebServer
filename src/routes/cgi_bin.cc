@@ -1,18 +1,28 @@
+#include <cgi_bin.h>
+
+#include <sys/stat.h>
+#include <sys/wait.h>
+#include <sys/mman.h>
+
+#include <dlfcn.h>
+#include <stdlib.h>
+#include <fcntl.h>
+
+#include <boost/algorithm/string.hpp>
+
 #include <iostream>
 #include <map>
 #include <vector>
-#include <boost/algorithm/string.hpp>
-#include <sys/wait.h>
-#include <sys/mman.h>
-#include <dlfcn.h>
-#include <stdlib.h>
-#include <sys/stat.h>
-#include <fcntl.h>
+
 
 #include "http_messages.hh"
 #include "socket.hh"
 
-void handle_cgi_bin_fork(std::string& program_name, std::string& original_querystring, const Socket_t& sock, const HttpRequest& request) {
+void handle_cgi_bin_fork(
+  const std::string& program_name,
+  const std::string& original_querystring,
+  const Socket_t& sock,
+  const HttpRequest& request) {
   int socketfd = sock->get_socket();
   int readfd, writefd;
   if (socketfd == -1) {
@@ -35,12 +45,12 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
       dup2(writefd, 1);
       close(writefd);
     } else {
-      dup2(socketfd, 1); // Redirect stdout to the socket
+      dup2(socketfd, 1);  // Redirect stdout to the socket
       close(socketfd);
     }
 
     std::cout << "HTTP/1.1 200 OK" << std::endl;
-  
+
     char *argv[2];
     argv[0] = const_cast<char *>(program_name.c_str());
     argv[1] = NULL;
@@ -65,7 +75,11 @@ void handle_cgi_bin_fork(std::string& program_name, std::string& original_querys
 
 
 std::map<std::string, void*> dlmap;
-void handle_loadable(std::string& program_name, std::string& original_querystring, const Socket_t& sock, const HttpRequest& request) {
+void handle_loadable(
+  const std::string& program_name,
+  const std::string& original_querystring,
+  const Socket_t& sock,
+  const HttpRequest& request) {
   int socketfd = sock->get_socket();
   bool buffered = false;
 
@@ -76,7 +90,7 @@ void handle_loadable(std::string& program_name, std::string& original_querystrin
 
   dprintf(socketfd, "HTTP/1.1 200 OK");
   size_t absolute_path_size = pathconf(".", _PC_PATH_MAX);
-  char* absolute_path = (char*)malloc(absolute_path_size);
+  char* absolute_path = reinterpret_cast<char*>(malloc(absolute_path_size))
   absolute_path = getcwd(absolute_path, (size_t)absolute_path_size);
   strcat(absolute_path, "/");
   strcat(absolute_path, program_name.c_str());

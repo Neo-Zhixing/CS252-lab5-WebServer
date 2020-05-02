@@ -1,10 +1,11 @@
+#include <unistd.h>
+
 #include <functional>
 #include <iostream>
 #include <sstream>
 #include <vector>
 #include <tuple>
 #include <thread>
-#include <unistd.h>
 #include <chrono>
 #include <limits>
 
@@ -50,7 +51,7 @@ void Server::run_thread() const {
 }
 
 void Server::run_thread_pool_worker() const {
-  while(true) {
+  while (true) {
     Socket_t sock = _acceptor.accept_connection();
     handle(std::move(sock));
   }
@@ -102,7 +103,8 @@ void Server::handle(const Socket_t sock) const {
     }
   }
   auto end_time = std::chrono::steady_clock::now();
-  auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+  auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(
+    end_time - start_time).count();
   if (duration < min_servetime) {
     min_servetime = duration;
   }
@@ -131,16 +133,16 @@ void Server::get_request(const Socket_t& sock, HttpRequest& req) const {
   while ((pos = line.find(' ')) != std::string::npos) {
       auto token = line.substr(0, pos);
       switch (state) {
-        case 0: req.method = token;break;
+        case 0: req.method = token; break;
         case 1: {
           req.request_uri = token;
           std::size_t question_mark_location = token.find('?');
-          if (question_mark_location != std::string::npos){
+          if (question_mark_location != std::string::npos) {
             req.query = token.substr(question_mark_location+ 1);
           }
           break;
         }
-        default: throw std::invalid_argument("Extra token on the first line"); 
+        default: throw std::invalid_argument("Extra token on the first line");
       }
       line.erase(0, pos + 1);
       state++;

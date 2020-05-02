@@ -38,7 +38,7 @@ std::string HttpResponse::to_string() const {
     }
 
     ss << " " << status_code << " ";
-    
+
     if (this->reason_phrase.empty()) {
         auto default_reason_phrase = default_status_reasons.find(status_code);
         if (default_reason_phrase == default_status_reasons.end()) {
@@ -50,8 +50,8 @@ std::string HttpResponse::to_string() const {
     }
 
     for (std::pair<std::string, std::string> header : headers) {
-		ss << header.first << ": " << header.second << "\r\n";
-	}
+        ss << header.first << ": " << header.second << "\r\n";
+    }
 
     if (headers.find("Content-Length") == headers.end()) {
         ss << "Content-Length: " << message_body.length() << "\r\n";

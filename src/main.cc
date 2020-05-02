@@ -1,22 +1,18 @@
-/**
- * This file parses the command line arguments and correctly
- * starts your server. You should not need to edit this file
- */
-
-#include <unistd.h>
-
-#include <csignal>
-#include <cstdio>
-#include <iostream>
-
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/resource.h>
+#include <unistd.h>
 
 #include "server.hh"
 #include "socket.hh"
 #include "tcp.hh"
 #include "tls.hh"
+
+#include <csignal>
+#include <cstdio>
+#include <iostream>
+
+
 
 enum concurrency_mode {
     E_NO_CONCURRENCY = 0,

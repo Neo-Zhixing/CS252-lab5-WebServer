@@ -1,9 +1,9 @@
+#include <experimental/filesystem>
+#include <fstream>
+
 #include "http_messages.hh"
 #include "socket.hh"
 #include "misc.hh"
-#include <fstream>
-#include <experimental/filesystem>
-// You may find implementing this function and using it in server.cc helpful
 
 namespace fs = std::experimental::filesystem;
 
@@ -14,7 +14,7 @@ void serve_file(const fs::path& path, const Socket_t& sock) {
     return;
   }
   HttpResponse response;
-  std::ifstream input(path, std::ios_base::in | std::ios_base::binary );
+  std::ifstream input(path, std::ios_base::in | std::ios_base::binary);
 
   if (!input) {
     response.status_code = 404;
@@ -33,11 +33,11 @@ void serve_file(const fs::path& path, const Socket_t& sock) {
   if (size > 0) {
     char * buf = new char[size];
     input.seekg(0, std::ios::beg);
-    
+
     input.read(buf, size);
     response.status_code = 200;
     response.headers["Content-Length"] = std::to_string(size);
-    response.headers["Content-Type"] = get_content_type(std::experimental::filesystem::absolute(path));
+    response.headers["Content-Type"] = get_content_type(fs::absolute(path));
     sock->write(response.to_string());
     sock->write(buf, size);
     delete[] buf;
@@ -66,12 +66,12 @@ void serve_dir(const fs::path& path, const Socket_t& sock) {
 
   for (auto const & elem : fs::directory_iterator(path)) {
     std::string newuri = elem.path();
-    newuri.erase(0,21);
+    newuri.erase(0, 21);
     buf << "<li><a href=\"" << newuri << "\">" << newuri << "</a></li>" << std::endl;
   }
 
-  
-buf << "\
+
+  buf << "\
     </ul>\
   </body>\
 </html>";
