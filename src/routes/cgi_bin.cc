@@ -87,11 +87,8 @@ void handle_loadable(
   }
 
   dprintf(socketfd, "HTTP/1.1 200 OK");
-  size_t absolute_path_size = pathconf(".", _PC_PATH_MAX);
-  char* absolute_path = reinterpret_cast<char*>(malloc(absolute_path_size));
-  absolute_path = getcwd(absolute_path, (size_t)absolute_path_size);
-  strcat(absolute_path, "/");
-  strcat(absolute_path, program_name.c_str());
+  fs::path path(program_name);
+  auto absolute_path = fs::absolute(path).path();
   void *dlo;
 
   auto i = dlmap.find(program_name);
