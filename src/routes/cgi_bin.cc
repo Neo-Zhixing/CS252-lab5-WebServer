@@ -92,7 +92,7 @@ void handle_loadable(
 
   dprintf(socketfd, "HTTP/1.1 200 OK");
   fs::path path(program_name);
-  auto absolute_path = fs::absolute(path).path();
+  std::string absolute_path = fs::absolute(path);
   void *dlo;
 
   auto i = dlmap.find(program_name);
