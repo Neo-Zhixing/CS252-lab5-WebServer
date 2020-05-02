@@ -3,14 +3,15 @@
 #include <sys/resource.h>
 #include <unistd.h>
 
+#include <csignal>
+#include <cstdio>
+#include <iostream>
+
 #include "server.hh"
 #include "socket.hh"
 #include "tcp.hh"
 #include "tls.hh"
 
-#include <csignal>
-#include <cstdio>
-#include <iostream>
 
 
 
@@ -26,7 +27,8 @@ extern "C" void signal_handler(int signal) {
 }
 
 extern "C" void killzombie(int signal) {
-    while(waitpid(-1, NULL, WNOHANG) > 0);
+    while (waitpid(-1, NULL, WNOHANG) > 0) {
+    }
 }
 
 int main(int argc, char** argv) {
@@ -49,7 +51,7 @@ int main(int argc, char** argv) {
     skillzombie.sa_handler = killzombie;
     sigemptyset(&skillzombie.sa_mask);
     skillzombie.sa_flags = SA_RESTART;
-    sigaction(SIGCHLD, &skillzombie, NULL );
+    sigaction(SIGCHLD, &skillzombie, NULL);
 
     struct sigaction sa;
     sa.sa_handler = signal_handler;
